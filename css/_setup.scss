@@ -1,0 +1,63 @@
+$backgroundColor: rgb(40, 40, 40);
+$backgroundColorHeader: rgb(20, 20, 20);
+$backgroundColorContainter: rgb(30, 30, 30);
+$fontColor: rgb(200, 200, 200);
+$fontFamily: "Montserrat", "LucidaGrande", "Tahoma";
+$baseMargin: 10px;
+$baseRounding: $baseMargin;
+$fontSize3: 15px;
+$fontSize4: 20px;
+$fontSize5: 25px;
+$fontSize6: 30px;
+
+$minSiteWidth: 450px;
+$maxSiteWidth: 800px;
+$bodyMargin: 6px;
+
+$btnHeight: 22px;
+
+$marginVert: 4px;
+$marginHorz: 4px;
+
+$fontSize: 11px;
+$fontSizeS: 11px;
+$fontSizeM: 12px;
+$fontSizeL: 14px;
+
+$letterSpacingBodyText: 0.05em;
+
+$transDurS: 0.1s;
+
+$hoverColor: rgb(42, 42, 42);
+$fontColorHover: rgb(191, 191, 191);
+
+$mainElementsColor: rgb(33, 33, 33);
+$mainElementsNestColor: rgb(28, 28, 28);
+
+$horzMargin: 4px;
+$rowItemsMargin: 8px;
+
+$scrollBarTrackColor: rgb(27, 27, 27);
+$scrollBarThumbColor: rgb(46, 46, 46);
+
+$borderRadius: 2px;
+$border: rgb(80, 80, 80) 1px solid;
+
+//TOGGLE BUTTON
+$toggleBGColorOn: rgb(56, 56, 56);
+$toggleBGColorOff: rgb(24, 24, 24);
+$toggleFontColorOn: $fontColor;
+$toggleFontColorOff: rgb(114, 114, 114);
+$onOffWidth: 50px;
+
+//DROPDOWN
+$ddWidth: 160px;
+
+//REMOVABLE BUTTON
+$minusContWidth: 40px;
+
+//INPUT TEXT WITH LABEL
+$inputWidth: 150px;
+$labelWidth: 250px;
+$textIndent: 8px;
+$sliderLabelWidth: auto;
