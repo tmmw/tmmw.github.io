@@ -59,6 +59,7 @@ header {
 }
 
 .productCont {
+	position: relative;
 	display: block;
 	width: 100%;
 	background-color: $backgroundColorContainter;
@@ -82,6 +83,11 @@ header {
 	letter-spacing: 0.05em;
 	font-weight: 400;
 	font-size: $fontSize3;
+	padding-bottom: 40px;
+}
+
+.productSplash {
+	position: relative;
 }
 
 .productSplashImage {
@@ -105,4 +111,16 @@ header {
 	#productsCont {
 		padding: calc(1 * #{$baseMargin}) calc(1 * #{$baseMargin});
 	}
+}
+
+.productType {
+	position: absolute;
+	padding: 8px 16px;
+	background-color: white;
+	color: black;
+	bottom: 5px;
+	right: 5px;
+	margin: auto;
+	border-radius: 8px;
+	font-size: $fontSize2;
 }
