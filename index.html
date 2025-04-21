@@ -17,7 +17,6 @@
 			padding: 10px 20px;
 			border-radius: 8px;
 			font-weight: 500;
-			margin-top: 15px;
 			display: inline-block;
 			transition: all 0.3s ease;
 		}
@@ -26,133 +25,308 @@
 			background-color: #ffffff;
 			transform: translateY(-2px);
 		}
+
+		header {
+			padding: 40px;
+			display: flex;
+			position: relative;
+			min-height: 180px;
+		}
+
+		.header-left {
+			position: absolute;
+			left: 40px;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+
+		.header-right {
+			width: 100%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.slogan {
+			margin: 0;
+			text-align: center;
+			font-size: 30px;
+			font-weight: 100;
+			letter-spacing: 2px;
+		}
+
+		.header-bottom {
+			display: flex;
+			align-items: center;
+			gap: 20px;
+		}
+
+		footer {
+			text-align: center;
+			padding: 20px;
+			margin-top: 40px;
+		}
+
+		.socialMediaIcon {
+			width: 32px;
+			height: 32px;
+			transition: transform 0.3s ease;
+		}
+
+		.socialMediaIcon:hover {
+			transform: scale(1.1);
+		}
+
+		.main-section {
+			padding: 20px;
+			margin-bottom: 40px;
+			width: 100%;
+		}
+
+		.main-section:nth-child(even) {
+			background-color: transparent;
+		}
+
+		.main-section:nth-child(odd) {
+			background-color: #1e1e1e;
+		}
+
+		.section-title {
+			color: #ececec;
+			font-size: 24px;
+			margin-bottom: 30px;
+			text-align: center;
+			letter-spacing: 3px;
+		}
+
+		#productsCont {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+			gap: 30px;
+			max-width: 1200px;
+			margin: 0 auto;
+		}
+
+		.productContWrapper {
+			background-color: #282828;
+			border-radius: 10px;
+			padding: 20px;
+			transition: transform 0.3s ease;
+		}
+
+		.productContWrapper:hover {
+			transform: translateY(-5px);
+		}
+
+		.productSplash {
+			margin-bottom: 15px;
+		}
+
+		.productSplashImage {
+			width: 100%;
+			height: auto;
+			border-radius: 5px;
+		}
+
+		.productTitle {
+			color: #ffffff;
+			font-size: 18px;
+			margin-bottom: 10px;
+		}
+
+		.productSlogan {
+			color: #c8c8c8;
+			font-size: 14px;
+			margin-bottom: 15px;
+		}
+
+		.productType {
+			color: #888;
+			font-size: 12px;
+		}
+
+		.custom-solutions {
+			text-align: center;
+			color: #c8c8c8;
+			max-width: 1200px;
+			margin: 0 auto;
+		}
+
+		.custom-solutions p {
+			margin-bottom: 20px;
+			line-height: 1.6;
+		}
+
+		.custom-solutions-logos {
+			display: flex;
+			justify-content: center;
+			gap: 30px;
+			margin-top: 20px;
+		}
+
+		.custom-solutions-logos img {
+			width: 48px;
+			height: 48px;
+			object-fit: contain;
+			transition: all 0.3s ease;
+		}
+
+		.custom-solutions-logos div {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
 	</style>
 </head>
 
 <body>
 	<header>
-		<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1000 1000" width="200">
-			<defs>
-				<clipPath id="clip-path">
-					<rect x="1338.87" y="944.5" width="3842" height="2162" fill="none" />
-				</clipPath>
-			</defs>
-			<g id="TMMW-YT-ChannelBanner">
-				<g clip-path="url(#clip-path)">
-					<path id="Symbol" d="M1227.68,1437.09l-167-399.46h89.11l166.53,399.46Zm255.38,0-167-399.46h89.11l166.52,399.46Zm250.55.57-167-399.46h89.11l166.52,399.46Zm255.38,0L1822,1038.2h89.12l166.52,399.46ZM1305.3,1344l-167-399.46h89.11L1393.93,1344Zm-334.6,93.13-167-399.46h89.12l166.52,399.46Zm77.62-93.13-167-399.46h89.11L1137,1344Zm512.35,0-167-399.46h89.11L1649.31,1344Zm250.56.57-167-399.46h89.12l166.52,399.46Zm255.38,0-167-399.46h89.11l166.52,399.46Z" fill="#231f20" opacity="0.25" />
+		<div class="header-left">
+			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1000 1000" width="100">
+				<defs>
+					<clipPath id="clip-path">
+						<rect x="1338.87" y="944.5" width="3842" height="2162" fill="none" />
+					</clipPath>
+				</defs>
+				<g id="TMMW-YT-ChannelBanner">
+					<g clip-path="url(#clip-path)">
+						<path id="Symbol" d="M1227.68,1437.09l-167-399.46h89.11l166.53,399.46Zm255.38,0-167-399.46h89.11l166.52,399.46Zm250.55.57-167-399.46h89.11l166.52,399.46Zm255.38,0L1822,1038.2h89.12l166.52,399.46ZM1305.3,1344l-167-399.46h89.11L1393.93,1344Zm-334.6,93.13-167-399.46h89.12l166.52,399.46Zm77.62-93.13-167-399.46h89.11L1137,1344Zm512.35,0-167-399.46h89.11L1649.31,1344Zm250.56.57-167-399.46h89.12l166.52,399.46Zm255.38,0-167-399.46h89.11l166.52,399.46Z" fill="#231f20" opacity="0.25" />
+					</g>
 				</g>
-			</g>
-			<g id="TMMW-Logo-Black-Transp">
-				<g id="Frame">
-					<path d="M890,44.09a66.08,66.08,0,0,1,66,66v780a66.07,66.07,0,0,1-66,66H110a66.07,66.07,0,0,1-66-66v-780a66.08,66.08,0,0,1,66-66H890m0-4H110a70,70,0,0,0-70,70v780a70,70,0,0,0,70,70H890a70,70,0,0,0,70-70v-780a70,70,0,0,0-70-70Z" fill="#fff" />
+				<g id="TMMW-Logo-Black-Transp">
+					<g id="Frame">
+						<path d="M890,44.09a66.08,66.08,0,0,1,66,66v780a66.07,66.07,0,0,1-66,66H110a66.07,66.07,0,0,1-66-66v-780a66.08,66.08,0,0,1,66-66H890m0-4H110a70,70,0,0,0-70,70v780a70,70,0,0,0,70,70H890a70,70,0,0,0,70-70v-780a70,70,0,0,0-70-70Z" fill="#fff" />
+					</g>
+					<g id="Symbol-2" data-name="Symbol">
+						<path d="M415.19,462.31,301.76,191h60.53l113.1,271.32Z" fill="#fff" />
+						<path d="M588.64,462.31,475.22,191h60.52L648.85,462.31Z" fill="#fff" />
+						<path d="M467.9,399.05,354.48,127.73H415L528.11,399.05Z" fill="#fff" />
+						<path d="M641.36,399.05,527.93,127.73h60.53l113.1,271.32Z" fill="#fff" />
+					</g>
+					<g id="Text">
+						<path d="M202.7,576.67v112.1H191.23V576.67H147.38V565.16h99.3v11.51Z" fill="#fff" />
+						<path d="M285.76,688.77H275.5V662.06h-29v26.71H236.3V627.19h10.22v25.9h29v-25.9h10.26Z" fill="#fff" />
+						<path d="M335.53,688.77H301V627.19h33.19v8.68h-23V653.3h21.17v8.63H311.19v18.21h24.34Z" fill="#fff" />
+						<path d="M505.65,688.77V603.43q0-6.54,1-21.12h-.34q-1.21,3.88-2.2,6.73a49.3,49.3,0,0,1-1.85,4.65l-43.1,95.08h-4.92l-43.18-94.48a79.6,79.6,0,0,1-3.88-12.15h-.35q.34,4,.48,9.05c.09,3.39.13,7.16.13,11.29v86.29H396.26V565.16H409.8l42,92.92c.87,2,1.71,3.95,2.55,6s1.59,4.21,2.28,6.51h.52c.8-2.3,1.54-4.4,2.2-6.29s1.48-3.94,2.45-6.12l42.33-93h12.84V688.77Z" fill="#fff" />
+						<path d="M587.16,688.77H576l-5.54-15.67H546.19l-5.32,15.67H529.71l23-61.58h11.51Zm-19.45-24-8.55-24.57a28,28,0,0,1-.81-3.86h-.17a25.84,25.84,0,0,1-.86,3.86l-8.46,24.57Z" fill="#fff" />
+						<path d="M639.32,686.19q-7,3.62-17.31,3.61-13.39,0-21.47-8.46t-8.07-22.2q0-14.77,9.08-23.88t23-9.1q8.93,0,14.82,2.53v10.14a26.51,26.51,0,0,0-13.75-3.69q-10,0-16.21,6.39t-6.2,17.09q0,10.18,5.8,16.21t15.24,6a27.39,27.39,0,0,0,15.12-4.12Z" fill="#fff" />
+						<path d="M702.46,688.77H692.2V662.06h-29v26.71H653V627.19h10.22v25.9h29v-25.9h10.26Z" fill="#fff" />
+						<path d="M728.14,688.77H717.62V627.19h10.52Z" fill="#fff" />
+						<path d="M795.52,688.77H784.35l-29.41-45.26a20.1,20.1,0,0,1-1.85-3.56h-.26a62.6,62.6,0,0,1,.35,8.45v40.37H743.3V627.19h11.89l28.43,44.19c1.2,1.83,2,3.09,2.32,3.78h.17a55.61,55.61,0,0,1-.43-8.29V627.19h9.84Z" fill="#fff" />
+						<path d="M845.33,688.77H810.76V627.19H844v8.68H821V653.3h21.17v8.63H821v18.21h24.35Z" fill="#fff" />
+						<path d="M265.75,848.77V763.43q0-6.54,1-21.12h-.35q-1.2,3.88-2.19,6.73a46.47,46.47,0,0,1-1.86,4.65l-43.1,95.08h-4.91l-43.19-94.48a80.9,80.9,0,0,1-3.87-12.15H167q.34,4,.47,9.05c.09,3.39.13,7.16.13,11.29v86.29h-11.2V725.16h13.53l42,92.92c.86,2,1.71,3.95,2.54,6s1.6,4.21,2.29,6.51h.52l2.19-6.29q1-2.85,2.46-6.12l42.32-93H277V848.77Z" fill="#fff" />
+						<path d="M344,823.86q0,25.93-24.57,25.94-23.54,0-23.53-24.95V787.19h10.22v35.56q0,18.12,14.09,18.12,13.56,0,13.56-17.48v-36.2H344Z" fill="#fff" />
+						<path d="M359.67,846.32V835.8a16.53,16.53,0,0,0,3.37,2.32,25.92,25.92,0,0,0,4.15,1.74,31.85,31.85,0,0,0,4.38,1.09,23.09,23.09,0,0,0,4,.39c4.3,0,7.5-.71,9.6-2.15a7,7,0,0,0,3.16-6.22,6.79,6.79,0,0,0-1.05-3.8,11,11,0,0,0-2.95-2.94,31.2,31.2,0,0,0-4.44-2.56q-2.55-1.23-5.48-2.55c-2.09-1.12-4-2.25-5.84-3.4a24.93,24.93,0,0,1-4.7-3.8,15.71,15.71,0,0,1-3.13-4.7,15.29,15.29,0,0,1-1.14-6.14,14.23,14.23,0,0,1,1.95-7.54,16.56,16.56,0,0,1,5.16-5.28,23.44,23.44,0,0,1,7.27-3.09,34.74,34.74,0,0,1,8.34-1q9.66,0,14.08,2.19v10.09q-5.24-3.78-13.48-3.78a24.65,24.65,0,0,0-4.53.43,13.5,13.5,0,0,0-4,1.42,8.7,8.7,0,0,0-2.9,2.53,6.25,6.25,0,0,0-1.12,3.74,7.08,7.08,0,0,0,.86,3.56,9.13,9.13,0,0,0,2.52,2.75,25.65,25.65,0,0,0,4,2.43q2.39,1.18,5.52,2.55c2.15,1.12,4.17,2.29,6.08,3.52a29.75,29.75,0,0,1,5,4.08,18.11,18.11,0,0,1,3.44,5,14.66,14.66,0,0,1,1.26,6.21,15.38,15.38,0,0,1-1.89,7.9,15.19,15.19,0,0,1-5.09,5.24,22.68,22.68,0,0,1-7.36,2.92,41.61,41.61,0,0,1-8.8.9,36.85,36.85,0,0,1-3.8-.24c-1.51-.15-3-.38-4.62-.68a43,43,0,0,1-4.47-1.1A14,14,0,0,1,359.67,846.32Z" fill="#fff" />
+						<path d="M451.89,795.87H434.2v52.9H424v-52.9H406.33v-8.68h45.56Z" fill="#fff" />
+						<path d="M636.41,848.77h-12L598,757.14c-.63-2.18-1.14-4.28-1.51-6.29a39.32,39.32,0,0,1-.65-5.87h-.34a54.33,54.33,0,0,1-2.5,12l-27.41,91.8h-12L517.11,725.16h12.76l27.24,97q.95,3.2,1.51,6.08t.9,5.56h.35a82.69,82.69,0,0,1,2.84-11.64l29-97h9.05l27.15,97.32q.78,2.92,1.38,5.73t1,5.47h.34a31,31,0,0,1,.69-3.87q.53-2.16,1.21-4.83l27.07-99.82H672Z" fill="#fff" />
+						<path d="M700.27,849.8q-13.32,0-21.32-8.63t-8-22.46q0-14.85,8.16-23.7t22.16-8.85q13,0,20.89,8.59t7.92,22.46q0,15.07-8.12,23.83T700.27,849.8Zm.47-54.66A17.11,17.11,0,0,0,687,801.45q-5.31,6.31-5.3,16.62t5.15,16.53a16.61,16.61,0,0,0,13.48,6.27q8.85,0,14-6t5.11-16.71q0-11-5-17T700.74,795.14Z" fill="#fff" />
+						<path d="M788.94,848.77H777l-9.83-16.49a34.45,34.45,0,0,0-2.6-3.89,15.8,15.8,0,0,0-2.57-2.64,9,9,0,0,0-2.86-1.5,12.06,12.06,0,0,0-3.48-.47h-4.12v25H741.36V787.19h20.27a29.66,29.66,0,0,1,8,1,18.57,18.57,0,0,1,6.35,3.12,14.35,14.35,0,0,1,4.23,5.19,16.33,16.33,0,0,1,1.53,7.28,17.67,17.67,0,0,1-1,6,15.35,15.35,0,0,1-2.75,4.85,16.64,16.64,0,0,1-4.29,3.63,21.35,21.35,0,0,1-5.65,2.32v.17a16.14,16.14,0,0,1,2.92,2.08c.83.76,1.62,1.54,2.36,2.34a29.13,29.13,0,0,1,2.22,2.73c.73,1,1.53,2.2,2.42,3.54Zm-37.4-53.29v20H760a12.51,12.51,0,0,0,4.36-.73,10.1,10.1,0,0,0,3.46-2.1,9.6,9.6,0,0,0,2.27-3.35,11.39,11.39,0,0,0,.82-4.43,8.79,8.79,0,0,0-2.79-6.91q-2.79-2.49-8-2.49Z" fill="#fff" />
+						<path d="M846.7,848.77H833.39L812,820.6a14.22,14.22,0,0,1-1.46-2.15h-.18v30.32H800.11V787.19h10.22v28.94h.18A13.72,13.72,0,0,1,812,814l20.65-26.84h12.24l-24.18,29.55Z" fill="#fff" />
+					</g>
 				</g>
-				<g id="Symbol-2" data-name="Symbol">
-					<path d="M415.19,462.31,301.76,191h60.53l113.1,271.32Z" fill="#fff" />
-					<path d="M588.64,462.31,475.22,191h60.52L648.85,462.31Z" fill="#fff" />
-					<path d="M467.9,399.05,354.48,127.73H415L528.11,399.05Z" fill="#fff" />
-					<path d="M641.36,399.05,527.93,127.73h60.53l113.1,271.32Z" fill="#fff" />
-				</g>
-				<g id="Text">
-					<path d="M202.7,576.67v112.1H191.23V576.67H147.38V565.16h99.3v11.51Z" fill="#fff" />
-					<path d="M285.76,688.77H275.5V662.06h-29v26.71H236.3V627.19h10.22v25.9h29v-25.9h10.26Z" fill="#fff" />
-					<path d="M335.53,688.77H301V627.19h33.19v8.68h-23V653.3h21.17v8.63H311.19v18.21h24.34Z" fill="#fff" />
-					<path d="M505.65,688.77V603.43q0-6.54,1-21.12h-.34q-1.21,3.88-2.2,6.73a49.3,49.3,0,0,1-1.85,4.65l-43.1,95.08h-4.92l-43.18-94.48a79.6,79.6,0,0,1-3.88-12.15h-.35q.34,4,.48,9.05c.09,3.39.13,7.16.13,11.29v86.29H396.26V565.16H409.8l42,92.92c.87,2,1.71,3.95,2.55,6s1.59,4.21,2.28,6.51h.52c.8-2.3,1.54-4.4,2.2-6.29s1.48-3.94,2.45-6.12l42.33-93h12.84V688.77Z" fill="#fff" />
-					<path d="M587.16,688.77H576l-5.54-15.67H546.19l-5.32,15.67H529.71l23-61.58h11.51Zm-19.45-24-8.55-24.57a28,28,0,0,1-.81-3.86h-.17a25.84,25.84,0,0,1-.86,3.86l-8.46,24.57Z" fill="#fff" />
-					<path d="M639.32,686.19q-7,3.62-17.31,3.61-13.39,0-21.47-8.46t-8.07-22.2q0-14.77,9.08-23.88t23-9.1q8.93,0,14.82,2.53v10.14a26.51,26.51,0,0,0-13.75-3.69q-10,0-16.21,6.39t-6.2,17.09q0,10.18,5.8,16.21t15.24,6a27.39,27.39,0,0,0,15.12-4.12Z" fill="#fff" />
-					<path d="M702.46,688.77H692.2V662.06h-29v26.71H653V627.19h10.22v25.9h29v-25.9h10.26Z" fill="#fff" />
-					<path d="M728.14,688.77H717.62V627.19h10.52Z" fill="#fff" />
-					<path d="M795.52,688.77H784.35l-29.41-45.26a20.1,20.1,0,0,1-1.85-3.56h-.26a62.6,62.6,0,0,1,.35,8.45v40.37H743.3V627.19h11.89l28.43,44.19c1.2,1.83,2,3.09,2.32,3.78h.17a55.61,55.61,0,0,1-.43-8.29V627.19h9.84Z" fill="#fff" />
-					<path d="M845.33,688.77H810.76V627.19H844v8.68H821V653.3h21.17v8.63H821v18.21h24.35Z" fill="#fff" />
-					<path d="M265.75,848.77V763.43q0-6.54,1-21.12h-.35q-1.2,3.88-2.19,6.73a46.47,46.47,0,0,1-1.86,4.65l-43.1,95.08h-4.91l-43.19-94.48a80.9,80.9,0,0,1-3.87-12.15H167q.34,4,.47,9.05c.09,3.39.13,7.16.13,11.29v86.29h-11.2V725.16h13.53l42,92.92c.86,2,1.71,3.95,2.54,6s1.6,4.21,2.29,6.51h.52l2.19-6.29q1-2.85,2.46-6.12l42.32-93H277V848.77Z" fill="#fff" />
-					<path d="M344,823.86q0,25.93-24.57,25.94-23.54,0-23.53-24.95V787.19h10.22v35.56q0,18.12,14.09,18.12,13.56,0,13.56-17.48v-36.2H344Z" fill="#fff" />
-					<path d="M359.67,846.32V835.8a16.53,16.53,0,0,0,3.37,2.32,25.92,25.92,0,0,0,4.15,1.74,31.85,31.85,0,0,0,4.38,1.09,23.09,23.09,0,0,0,4,.39c4.3,0,7.5-.71,9.6-2.15a7,7,0,0,0,3.16-6.22,6.79,6.79,0,0,0-1.05-3.8,11,11,0,0,0-2.95-2.94,31.2,31.2,0,0,0-4.44-2.56q-2.55-1.23-5.48-2.55c-2.09-1.12-4-2.25-5.84-3.4a24.93,24.93,0,0,1-4.7-3.8,15.71,15.71,0,0,1-3.13-4.7,15.29,15.29,0,0,1-1.14-6.14,14.23,14.23,0,0,1,1.95-7.54,16.56,16.56,0,0,1,5.16-5.28,23.44,23.44,0,0,1,7.27-3.09,34.74,34.74,0,0,1,8.34-1q9.66,0,14.08,2.19v10.09q-5.24-3.78-13.48-3.78a24.65,24.65,0,0,0-4.53.43,13.5,13.5,0,0,0-4,1.42,8.7,8.7,0,0,0-2.9,2.53,6.25,6.25,0,0,0-1.12,3.74,7.08,7.08,0,0,0,.86,3.56,9.13,9.13,0,0,0,2.52,2.75,25.65,25.65,0,0,0,4,2.43q2.39,1.18,5.52,2.55c2.15,1.12,4.17,2.29,6.08,3.52a29.75,29.75,0,0,1,5,4.08,18.11,18.11,0,0,1,3.44,5,14.66,14.66,0,0,1,1.26,6.21,15.38,15.38,0,0,1-1.89,7.9,15.19,15.19,0,0,1-5.09,5.24,22.68,22.68,0,0,1-7.36,2.92,41.61,41.61,0,0,1-8.8.9,36.85,36.85,0,0,1-3.8-.24c-1.51-.15-3-.38-4.62-.68a43,43,0,0,1-4.47-1.1A14,14,0,0,1,359.67,846.32Z" fill="#fff" />
-					<path d="M451.89,795.87H434.2v52.9H424v-52.9H406.33v-8.68h45.56Z" fill="#fff" />
-					<path d="M636.41,848.77h-12L598,757.14c-.63-2.18-1.14-4.28-1.51-6.29a39.32,39.32,0,0,1-.65-5.87h-.34a54.33,54.33,0,0,1-2.5,12l-27.41,91.8h-12L517.11,725.16h12.76l27.24,97q.95,3.2,1.51,6.08t.9,5.56h.35a82.69,82.69,0,0,1,2.84-11.64l29-97h9.05l27.15,97.32q.78,2.92,1.38,5.73t1,5.47h.34a31,31,0,0,1,.69-3.87q.53-2.16,1.21-4.83l27.07-99.82H672Z" fill="#fff" />
-					<path d="M700.27,849.8q-13.32,0-21.32-8.63t-8-22.46q0-14.85,8.16-23.7t22.16-8.85q13,0,20.89,8.59t7.92,22.46q0,15.07-8.12,23.83T700.27,849.8Zm.47-54.66A17.11,17.11,0,0,0,687,801.45q-5.31,6.31-5.3,16.62t5.15,16.53a16.61,16.61,0,0,0,13.48,6.27q8.85,0,14-6t5.11-16.71q0-11-5-17T700.74,795.14Z" fill="#fff" />
-					<path d="M788.94,848.77H777l-9.83-16.49a34.45,34.45,0,0,0-2.6-3.89,15.8,15.8,0,0,0-2.57-2.64,9,9,0,0,0-2.86-1.5,12.06,12.06,0,0,0-3.48-.47h-4.12v25H741.36V787.19h20.27a29.66,29.66,0,0,1,8,1,18.57,18.57,0,0,1,6.35,3.12,14.35,14.35,0,0,1,4.23,5.19,16.33,16.33,0,0,1,1.53,7.28,17.67,17.67,0,0,1-1,6,15.35,15.35,0,0,1-2.75,4.85,16.64,16.64,0,0,1-4.29,3.63,21.35,21.35,0,0,1-5.65,2.32v.17a16.14,16.14,0,0,1,2.92,2.08c.83.76,1.62,1.54,2.36,2.34a29.13,29.13,0,0,1,2.22,2.73c.73,1,1.53,2.2,2.42,3.54Zm-37.4-53.29v20H760a12.51,12.51,0,0,0,4.36-.73,10.1,10.1,0,0,0,3.46-2.1,9.6,9.6,0,0,0,2.27-3.35,11.39,11.39,0,0,0,.82-4.43,8.79,8.79,0,0,0-2.79-6.91q-2.79-2.49-8-2.49Z" fill="#fff" />
-					<path d="M846.7,848.77H833.39L812,820.6a14.22,14.22,0,0,1-1.46-2.15h-.18v30.32H800.11V787.19h10.22v28.94h.18A13.72,13.72,0,0,1,812,814l20.65-26.84h12.24l-24.18,29.55Z" fill="#fff" />
-				</g>
-			</g>
-		</svg>
-
-		<h3 class="slogan">We specialize in time saving tools so you can relax and watch the machine work</h3>
-		<div id="socialMediaCont">
-			<a href="https://www.youtube.com/channel/UCEI8OO7kcza_Qd33lwVK7bg">
-				<img src="./images/Youtube.png" alt="" class="socialMediaIcon">
-			</a>
-
-			<a href="">
-				<img src="./images/Behance.png" alt="" class="socialMediaIcon" style="display: none;">
-			</a>
+			</svg>
 		</div>
-		<a href="contact.html" class="contact-button">Contact Us</a>
+		<div class="header-right">
+			<h3 class="slogan">Time Saving Solutions</h3>
+		</div>
 	</header>
 
-	<div id="productsCont">
-		<div class="productContWrapper">
-			<a class="productCont" href="https://aescripts.com/clips-exporter/">
-				<div class="productSplash">
-					<img class="productSplashImage" src="./images/TMMW_Art_ClipsExporter-AES-SplashImage.jpg" alt="">
+	<section class="main-section">
+		<h2 class="section-title">Custom Tools</h2>
+		<div class="custom-solutions">
+			<p>Want to automate your workflow?</p>
+			<p>We create solutions tailored to your needs.</p>
+			<a href="contact.html" class="contact-button">Get in Touch</a>
+			<div style="list-style-type: none; padding-left: 0; margin-top: 20px;">
+				<span style="margin-right: 40px;">✓ Automation for repetitive tasks</span>
+				<span style="margin-right: 40px;">✓ Integration with other software</span>
+				<span style="margin-right: 40px;">✓ New workflow enhancements</span>
+			</div>
+			<div class="custom-solutions-logos">
+				<div>
+					<img src="./images/premiere-pro.png" alt="Premiere Pro">
 				</div>
-				<div class="productTitle">Clips Exporter</div>
-				<div class="productSlogan">
-					Batch export individual clips from your Premiere Pro sequences in a single click. Including applied effects!
+				<div>
+					<img src="./images/after-effects.png" alt="After Effects">
 				</div>
-				<div class="productType">Extension</div>
-			</a>
+				<div>
+					<img src="./images/photoshop.png" alt="Photoshop">
+				</div>
+				<div>
+					<img src="./images/davinci-resolve.png" alt="DaVinci Resolve">
+				</div>
+			</div>
 		</div>
-		<div class="productContWrapper">
-			<a class="productCont" href="https://aescripts.com/text-replacer-for-premiere-pro/">
-				<div class="productSplash">
-					<img class="productSplashImage" src="./images/TMMW_Art_TextReplacerForPR-AES-SplashImage.jpg" alt="">
-				</div>
-				<div class="productTitle">Text Replacer</div>
-				<div class="productSlogan">
-					Import and export text in Premiere Pro from your After Effects templates (.mogrt). ⚠ Works with templates (.mogrt) created in After Effects. Not with templates (.mogrt) created in Premiere Pro ⚠
-				</div>
-				<div class="productType">Extension</div>
-			</a>
-		</div>
+	</section>
+	
+	<section class="main-section">
+		<h3 class="slogan">We can streamline it for you.</h3>
+
+		</section>
 
 
-		<div class="productContWrapper">
-			<a class="productCont" href="https://aescripts.com/selector-for-premiere-pro/">
-				<div class="productSplash">
-					<img class="productSplashImage" src="./images/TMMW_Art_SelectorForPR-AES-SplashImage.jpg" alt="">
-				</div>
-				<div class="productTitle">Selector</div>
-				<div class="productSlogan">
-					Easily select items and clips in your Premiere Pro projects and sequences. Save selection presets. Use over 45 selection filters. Load selection presets in a single click!
-				</div>
-				<div class="productType">Extension</div>
-			</a>
-		</div>
-		<!-- <div class="productContWrapper">
-			<a class="productCont" href="https://aescripts.com/thumbs-up/">
-				<div class="productSplash">
-					<img class="productSplashImage" src="./images/TMMW_Art_ThumbsUp-AES-SplashImage.jpg" alt="">
-				</div>
-				<div class="productTitle">Thumbs Up</div>
-				<div class="productSlogan">
-					Easily create thumbnails for social media and client websites. Directly from your Sequence (Premiere Pro), Composition (After Effects) or Document (Photoshop).
-				</div>
-				<div class="productType">Extension</div>
-			</a>
-		</div> -->
-		<div class="productContWrapper">
-			<a class="productCont" href="https://adobe.com/go/cc_plugins_discover_plugin?pluginId=abc6dfb8&workflow=share">
-				<div class="productSplash">
-					<img class="productSplashImage" src="./images/TMMW_Art_ThumbsUpForPS-AES-SplashImage.jpg" alt="">
-				</div>
-				<div class="productTitle">Thumbs Up for Photoshop</div>
-				<div class="productSlogan">
-					Easily prepare images for distribution in a single click. Crop, play actions, add overlays and save custom presets.
-				</div>
-				<div class="productType">Plugin</div>
-			</a>
-		</div>
+	<section class="main-section">
+		<h2 class="section-title">Our Products</h2>
+		<div id="productsCont">
+			<div class="productContWrapper">
+				<a class="productCont" href="https://aescripts.com/clips-exporter/">
+					<div class="productSplash">
+						<img class="productSplashImage" src="./images/TMMW_Art_ClipsExporter-AES-SplashImage.jpg" alt="">
+					</div>
+					<div class="productTitle">Clips Exporter</div>
+					<div class="productSlogan">
+						Batch export individual clips from your Premiere Pro sequences in a single click. Including applied effects!
+					</div>
+					<div class="productType">Extension</div>
+				</a>
+			</div>
 
-	</div>
+			<div class="productContWrapper">
+				<a class="productCont" href="https://aescripts.com/text-replacer-for-premiere-pro/">
+					<div class="productSplash">
+						<img class="productSplashImage" src="./images/TMMW_Art_TextReplacerForPR-AES-SplashImage.jpg" alt="">
+					</div>
+					<div class="productTitle">Text Replacer</div>
+					<div class="productSlogan">
+						Import and export text in Premiere Pro from your After Effects templates (.mogrt). ⚠ Works with templates (.mogrt) created in After Effects. Not with templates (.mogrt) created in Premiere Pro ⚠
+					</div>
+					<div class="productType">Extension</div>
+				</a>
+			</div>
+
+			<div class="productContWrapper">
+				<a class="productCont" href="https://aescripts.com/selector-for-premiere-pro/">
+					<div class="productSplash">
+						<img class="productSplashImage" src="./images/TMMW_Art_SelectorForPR-AES-SplashImage.jpg" alt="">
+					</div>
+					<div class="productTitle">Selector</div>
+					<div class="productSlogan">
+						Easily select items and clips in your Premiere Pro projects and sequences. Save selection presets. Use over 45 selection filters. Load selection presets in a single click!
+					</div>
+					<div class="productType">Extension</div>
+				</a>
+			</div>
+
+			<div class="productContWrapper">
+				<a class="productCont" href="https://adobe.com/go/cc_plugins_discover_plugin?pluginId=abc6dfb8&workflow=share">
+					<div class="productSplash">
+						<img class="productSplashImage" src="./images/TMMW_Art_ThumbsUpForPS-AES-SplashImage.jpg" alt="">
+					</div>
+					<div class="productTitle">Thumbs Up for Photoshop</div>
+					<div class="productSlogan">
+						Easily prepare images for distribution in a single click. Crop, play actions, add overlays and save custom presets.
+					</div>
+					<div class="productType">Plugin</div>
+				</a>
+			</div>
+		</div>
+	</section>
+
+	<footer>
+		<a href="https://www.youtube.com/channel/UCEI8OO7kcza_Qd33lwVK7bg">
+			<img src="./images/Youtube.png" alt="YouTube Channel" class="socialMediaIcon">
+		</a>
+	</footer>
 
 	<script src="js/header.js"></script>
 </body>
