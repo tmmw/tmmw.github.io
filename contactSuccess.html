@@ -5,65 +5,37 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact - The Machine Must Work</title>
+    <title>Message Sent - The Machine Must Work</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
-        .contact-container {
+        .success-container {
             width: 100%;
             max-width: 600px;
             padding: 20px;
-            margin: 20px auto;
+            margin: 40px auto;
+            text-align: center;
+            color: #c8c8c8;
         }
 
-        .contact-form {
+        .success-message {
             background-color: #1e1e1e;
             padding: 30px;
             border-radius: 10px;
             border: 1px solid slategrey;
-        }
-
-        .form-group {
             margin-bottom: 20px;
         }
 
-        label {
-            display: block;
-            margin-bottom: 5px;
-            color: #c8c8c8;
+        .success-message h2 {
+            color: #ffffff;
+            margin-bottom: 20px;
         }
 
-        input, textarea {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #444;
-            border-radius: 4px;
-            background-color: #282828;
-            color: #c8c8c8;
-            font-family: inherit;
-        }
-
-        textarea {
-            min-height: 150px;
-            resize: vertical;
-        }
-
-        button {
-            background-color: #c8c8c8;
-            color: #282828;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-family: inherit;
-            font-weight: 500;
-            transition: background-color 0.3s;
-        }
-
-        button:hover {
-            background-color: #ffffff;
+        .success-message p {
+            margin-bottom: 20px;
+            line-height: 1.6;
         }
 
         .home-button {
@@ -75,6 +47,7 @@
             display: inline-block;
             border: 1px solid #c8c8c8;
             transition: all 0.3s ease;
+            text-decoration: none;
         }
         
         .home-button:hover {
@@ -129,82 +102,10 @@
         .socialMediaIcon:hover {
             transform: scale(1.1);
         }
-
-        .error-message {
-            color: #ff4444;
-            margin-bottom: 20px;
-            padding: 10px;
-            background-color: #ffeeee;
-            border-radius: 4px;
-            display: none;
-        }
-
-        .back-button {
-            position: fixed;
-            left: 20px;
-            bottom: 20px;
-            background-color: #1e1e1e;
-            color: #c8c8c8;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-weight: 500;
-            display: inline-block;
-            border: 1px solid #c8c8c8;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            z-index: 100;
-        }
-        
-        .back-button:hover {
-            background-color: #282828;
-            transform: translateY(-2px);
-        }
-
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            display: none;
-        }
-
-        .loading-spinner {
-            background-color: #1e1e1e;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            color: #c8c8c8;
-        }
-
-        .loading-spinner::after {
-            content: '';
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            margin-left: 10px;
-            border: 3px solid #c8c8c8;
-            border-radius: 50%;
-            border-top-color: transparent;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
     </style>
 </head>
 
 <body>
-    <a href="index.html" class="back-button">← Back</a>
-    <div class="loading-overlay">
-        <div class="loading-spinner">Sending message...</div>
-    </div>
     <header>
         <div class="header-left">
             <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1000 1000" width="100">
@@ -256,22 +157,12 @@
         </div>
     </header>
 
-    <div class="contact-container">
-        <form id="contactForm" action="https://script.google.com/macros/s/AKfycbwR6bdiIoGFGX3PbVBuRYTxrGdquSlEEtDQYfFDiVKvRXF55Rhtz5PImWvwaC1Q4HQHMA/exec" method="post">
-            <div class="form-group">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="Name" required>
-            </div>
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="Email" required>
-            </div>
-            <div class="form-group">
-                <label for="message">Message:</label>
-                <textarea id="message" name="Message" required></textarea>
-            </div>
-            <button type="submit">Send Message</button>
-        </form>
+    <div class="success-container">
+        <div class="success-message">
+            <h2>Message Sent Successfully!</h2>
+            <p>Thank you for reaching out to us. We have received your message and will get back to you as soon as possible.</p>
+            <a href="index.html" class="home-button">Return to Home</a>
+        </div>
     </div>
 
     <footer>
@@ -279,75 +170,5 @@
             <img src="./images/Youtube.png" alt="YouTube Channel" class="socialMediaIcon">
         </a>
     </footer>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('contactForm');
-            const loadingOverlay = document.querySelector('.loading-overlay');
-            
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                // Show loading overlay
-                loadingOverlay.style.display = 'flex';
-                
-                // Validate form
-                const name = document.getElementById('name').value.trim();
-                const email = document.getElementById('email').value.trim();
-                const message = document.getElementById('message').value.trim();
-                
-                // Clear any existing error messages
-                const existingError = document.querySelector('.error-message');
-                if (existingError) {
-                    existingError.remove();
-                }
-                
-                // Validate fields
-                if (!name || !email || !message) {
-                    loadingOverlay.style.display = 'none';
-                    showError('Please fill in all fields.');
-                    return;
-                }
-                
-                // Validate email format
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailRegex.test(email)) {
-                    loadingOverlay.style.display = 'none';
-                    showError('Please enter a valid email address.');
-                    return;
-                }
-                
-                // Submit the form
-                const formData = new FormData(form);
-                fetch(form.action, {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => {
-                    if (response.ok) {
-                        window.location.href = 'contactSuccess.html';
-                    } else {
-                        loadingOverlay.style.display = 'none';
-                        showError('There was an error sending your message. Please try again.');
-                    }
-                })
-                .catch(error => {
-                    loadingOverlay.style.display = 'none';
-                    showError('There was an error sending your message. Please try again.');
-                    console.error('Error:', error);
-                });
-            });
-            
-            function showError(message) {
-                const errorDiv = document.createElement('div');
-                errorDiv.className = 'error-message';
-                errorDiv.textContent = message;
-                errorDiv.style.display = 'block';
-                
-                const form = document.getElementById('contactForm');
-                form.parentNode.insertBefore(errorDiv, form);
-            }
-        });
-    </script>
 </body>
 </html> 
