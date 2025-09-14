@@ -344,8 +344,17 @@
                     existingError.remove();
                 }
 
+                // Word count check - filter out messages with less than 20 words (likely spam)
+                const wordCount = message.trim().split(/\s+/).filter(word => word.length > 0).length;
+                if (wordCount < 20) {
+                    loadingOverlay.style.display = 'none';
+                    console.log('Spam detected: message too short (less than 20 words)');
+                    showError('Please provide a more detailed message (at least 20 words).');
+                    return;
+                }
+
                 // Spam words check
-                const spamKeywords = ['bitcoin', 'btc.get'];
+                const spamKeywords = ['bitcoin', 'btc.get', 'btc'];
                 const messageText = message.toLowerCase();
                 for (const keyword of spamKeywords) {
                     if (messageText.includes(keyword)) {
