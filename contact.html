@@ -348,8 +348,8 @@
                 const wordCount = message.trim().split(/\s+/).filter(word => word.length > 0).length;
                 if (wordCount < 20) {
                     loadingOverlay.style.display = 'none';
-                    console.log('Spam detected: message too short (less than 20 words)');
-                    showError('Please provide a more detailed message (at least 20 words).');
+                    console.log('Spam detected: message too short');
+                    showError('Please provide a more detailed message');
                     return;
                 }
 
