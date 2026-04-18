@@ -275,12 +275,15 @@
 				<textarea id="message" name="Message" required></textarea>
 			</div>
 			<!-- Honeypot field - hidden from humans but visible to bots -->
-			<div class="form-group" style="display:none">
-				<label for="emailConfirm">Email Confirm:</label>
-				<input type="text" id="emailConfirm" name="emailConfirm" autocomplete="off">
+			<div class="form-group" style="position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0;" aria-hidden="true">
+				<label for="website">Website:</label>
+				<input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
 			</div>
 			<!-- Time-based check to prevent automated submissions -->
 			<input type="hidden" id="formTimestamp" name="formTimestamp" value="">
+			<!-- Additional hidden fields for spam detection -->
+			<input type="hidden" id="userAgent" name="userAgent" value="">
+			<input type="hidden" id="timezone" name="timezone" value="">
 			<button type="submit">Send Message</button>
 		</form>
 	</div>
@@ -298,6 +301,10 @@
 
 			// Set timestamp when page loads
 			document.getElementById('formTimestamp').value = Date.now();
+			
+			// Capture user agent and timezone for fingerprinting
+			document.getElementById('userAgent').value = navigator.userAgent;
+			document.getElementById('timezone').value = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
 			form.addEventListener('submit', function (e) {
 				e.preventDefault();
@@ -309,7 +316,7 @@
 				const name = document.getElementById('name').value.trim();
 				const email = document.getElementById('email').value.trim();
 				const message = document.getElementById('message').value.trim();
-				const honeypot = document.getElementById('email2').value.trim();
+				const honeypot = document.getElementById('website').value.trim();
 				const timestamp = document.getElementById('formTimestamp').value;
 				const currentTime = Date.now();
 				const timeDiff = currentTime - timestamp;
@@ -320,31 +327,7 @@
 					existingError.remove();
 				}
 
-				// Word count check - filter out messages with less than 20 words (likely spam)
-				const wordCount = message.trim().split(/\s+/).filter(word => word.length > 0).length;
-				if (wordCount < 20) {
-					loadingOverlay.style.display = 'none';
-					console.log('Spam detected: message too short');
-					showError('Please provide a more detailed message');
-					return;
-				}
-
-				// Spam words check
-				const spamKeywords = ['btc', 'crypto', 'bitcoin', 'btc.get', 'btc', 'wallet alert', "finalize reception",
-					"win iphone", "win samsung", "lottery", "congratulations"
-				];
-
-				const messageText = message.toLowerCase();
-				for (const keyword of spamKeywords) {
-					if (messageText.includes(keyword)) {
-						loadingOverlay.style.display = 'none';
-						console.log('Spam detected: keyword found in message');
-						showError('Form submission failed. Please try again later.');
-						return;
-					}
-				}
-
-				// Check honeypot (should be empty)
+				// 1. HONEYPOT CHECK - Should be empty
 				if (honeypot) {
 					loadingOverlay.style.display = 'none';
 					console.log('Spam detected: honeypot field filled');
@@ -352,28 +335,194 @@
 					return;
 				}
 
-				// Check if the form was submitted too quickly (less than 3 seconds)
+				// 2. TIME-BASED CHECK - Form submitted too quickly (less than 15 seconds)
 				if (timeDiff < 15000) {
 					loadingOverlay.style.display = 'none';
 					console.log('Spam detected: form submitted too quickly');
-					showError('Form submission failed. Please try again now.');
+					showError('Please take a moment to review your message before sending.');
 					return;
 				}
 
-				// Validate fields
+				// 3. BASIC FIELD VALIDATION
 				if (!name || !email || !message) {
 					loadingOverlay.style.display = 'none';
 					showError('Please fill in all fields.');
 					return;
 				}
 
-				// Validate email format
+				// 4. EMAIL FORMAT VALIDATION
 				const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 				if (!emailRegex.test(email)) {
 					loadingOverlay.style.display = 'none';
 					showError('Please enter a valid email address.');
 					return;
 				}
+
+				// 5. SUSPICIOUS EMAIL DOMAIN CHECK
+				const suspiciousEmailDomains = [
+					'tempmail', 'throwaway', 'guerrillamail', '10minutemail', 'mailinator',
+					'trashmail', 'yopmail', 'sharklasers', 'getnada', 'temp-mail'
+				];
+				const emailLower = email.toLowerCase();
+				if (suspiciousEmailDomains.some(domain => emailLower.includes(domain))) {
+					loadingOverlay.style.display = 'none';
+					console.log('Spam detected: suspicious email domain');
+					showError('Please use a permanent email address.');
+					return;
+				}
+
+				// 6. WORD COUNT CHECK - Messages with less than 20 words
+				const wordCount = message.trim().split(/\s+/).filter(word => word.length > 0).length;
+				if (wordCount < 20) {
+					loadingOverlay.style.display = 'none';
+					console.log('Spam detected: message too short');
+					showError('Please provide a more detailed message (at least 20 words).');
+					return;
+				}
+
+				// 7. MESSAGE LENGTH CHECK - Too short or suspiciously long
+				if (message.length < 50 || message.length > 5000) {
+					loadingOverlay.style.display = 'none';
+					console.log('Spam detected: inappropriate message length');
+					showError('Message length must be between 50 and 5000 characters.');
+					return;
+				}
+
+				// 8. EXPANDED SPAM KEYWORDS CHECK
+				const spamKeywords = [
+					// Crypto/Financial spam
+					'btc', 'bitcoin', 'crypto', 'cryptocurrency', 'wallet alert', 'blockchain',
+					'ethereum', 'nft', 'investment opportunity', 'double your money', 'get rich',
+					'forex trading', 'binary options', 'pump and dump',
+					// Prize/lottery spam
+					'win iphone', 'win samsung', 'lottery', 'congratulations you won', 
+					'claim your prize', 'you have won', 'lucky winner',
+					// Common spam phrases
+					'click here now', 'act now', 'limited time offer', 'finalize reception',
+					'verify your account', 'suspended account', 'urgent action required',
+					'confirm your identity', 'update your information',
+					// SEO/Marketing spam
+					'seo services', 'increase traffic', 'backlinks', 'rank #1 on google',
+					'web design services', 'free consultation', 'special discount',
+					// Casino/Adult spam
+					'casino', 'viagra', 'cialis', 'weight loss', 'diet pills',
+					// Malicious links
+					'bit.ly', 'tinyurl', 'goo.gl', 't.co'
+				];
+
+				const messageText = message.toLowerCase();
+				const nameText = name.toLowerCase();
+				const combinedText = messageText + ' ' + nameText;
+				
+				for (const keyword of spamKeywords) {
+					if (combinedText.includes(keyword)) {
+						loadingOverlay.style.display = 'none';
+						console.log('Spam detected: keyword found - ' + keyword);
+						showError('Your message contains content that cannot be processed. Please revise and try again.');
+						return;
+					}
+				}
+
+				// 9. URL/LINK DETECTION - Check for excessive or suspicious links
+				const urlRegex = /(https?:\/\/[^\s]+)|(www\.[^\s]+)|(\b[a-z0-9]+\.(com|net|org|io|xyz|top|online|site|club|info|biz)[^\s]*)/gi;
+				const urls = message.match(urlRegex) || [];
+				if (urls.length > 2) {
+					loadingOverlay.style.display = 'none';
+					console.log('Spam detected: too many URLs');
+					showError('Please limit your message to a maximum of 2 links.');
+					return;
+				}
+
+				// 10. EXCESSIVE CAPITALIZATION CHECK
+				const capsCount = (message.match(/[A-Z]/g) || []).length;
+				const lettersCount = (message.match(/[a-zA-Z]/g) || []).length;
+				if (lettersCount > 0 && (capsCount / lettersCount) > 0.5) {
+					loadingOverlay.style.display = 'none';
+					console.log('Spam detected: excessive capitalization');
+					showError('Please use normal capitalization in your message.');
+					return;
+				}
+
+				// 11. REPEATED CHARACTERS CHECK
+				if (/(.)\1{4,}/.test(message)) {
+					loadingOverlay.style.display = 'none';
+					console.log('Spam detected: repeated characters');
+					showError('Please avoid using repeated characters excessively.');
+					return;
+				}
+
+				// 12. SPECIAL CHARACTERS RATIO CHECK
+				const specialChars = message.match(/[^a-zA-Z0-9\s.,!?'"()-]/g) || [];
+				if (specialChars.length / message.length > 0.15) {
+					loadingOverlay.style.display = 'none';
+					console.log('Spam detected: too many special characters');
+					showError('Please reduce the number of special characters in your message.');
+					return;
+				}
+
+				// 13. NAME VALIDATION - Check for suspicious patterns
+				if (name.length < 2 || name.length > 100) {
+					loadingOverlay.style.display = 'none';
+					showError('Please enter a valid name (2-100 characters).');
+					return;
+				}
+
+				// Check for numbers in name (common in spam)
+				if (/\d/.test(name)) {
+					loadingOverlay.style.display = 'none';
+					console.log('Spam detected: numbers in name');
+					showError('Please enter a valid name without numbers.');
+					return;
+				}
+
+				// 14. EMOJI BOMB CHECK
+				const emojiRegex = /[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F1E0}-\u{1F1FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu;
+				const emojiCount = (message.match(emojiRegex) || []).length;
+				if (emojiCount > 5) {
+					loadingOverlay.style.display = 'none';
+					console.log('Spam detected: excessive emojis');
+					showError('Please limit the use of emojis in your message.');
+					return;
+				}
+
+				// 15. DUPLICATE SUBMISSION CHECK (using localStorage)
+				const messageHash = simpleHash(email + message);
+				const lastSubmission = localStorage.getItem('lastSubmission');
+				const lastSubmissionTime = localStorage.getItem('lastSubmissionTime');
+				
+				if (lastSubmission === messageHash && lastSubmissionTime) {
+					const timeSinceLastSubmit = Date.now() - parseInt(lastSubmissionTime);
+					if (timeSinceLastSubmit < 300000) { // 5 minutes
+						loadingOverlay.style.display = 'none';
+						console.log('Spam detected: duplicate submission');
+						showError('This message was recently submitted. Please wait before resubmitting.');
+						return;
+					}
+				}
+
+				// 16. LANGUAGE PATTERN CHECK - Very simple check for common spam patterns
+				const spamPatterns = [
+					/dear (sir|madam|friend)/i,
+					/i am (mr|mrs|miss|dr)\.?\s+\w+\s+from/i,
+					/million (dollars|usd|pounds)/i,
+					/business (proposal|opportunity)/i,
+					/transfer.*fund/i,
+					/urgent.*reply/i,
+					/confidential.*business/i
+				];
+				
+				for (const pattern of spamPatterns) {
+					if (pattern.test(message)) {
+						loadingOverlay.style.display = 'none';
+						console.log('Spam detected: spam pattern match');
+						showError('Your message contains content that cannot be processed. Please revise and try again.');
+						return;
+					}
+				}
+
+				// All checks passed - store submission info and submit
+				localStorage.setItem('lastSubmission', messageHash);
+				localStorage.setItem('lastSubmissionTime', Date.now().toString());
 
 				// Submit the form
 				const formData = new FormData(form);
@@ -395,6 +544,17 @@
 						console.error('Error:', error);
 					});
 			});
+
+			// Simple hash function for duplicate detection
+			function simpleHash(str) {
+				let hash = 0;
+				for (let i = 0; i < str.length; i++) {
+					const char = str.charCodeAt(i);
+					hash = ((hash << 5) - hash) + char;
+					hash = hash & hash; // Convert to 32-bit integer
+				}
+				return hash.toString();
+			}
 
 			function showError(message) {
 				const errorDiv = document.createElement('div');
