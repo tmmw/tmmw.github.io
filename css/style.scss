@@ -50,7 +50,7 @@ header {
 	row-gap: $baseMargin;
 	column-gap: $baseMargin;
 	grid-auto-flow: row;
-	width: minmax(400px, 60%);
+	width: min(1200px, 100%);
 }
 
 .productContWrapper {
@@ -74,7 +74,6 @@ header {
 	font-size: $fontSize5;
 	letter-spacing: 0.1em;
 	font-weight: 100;
-	display: none;
 }
 
 .productSlogan {

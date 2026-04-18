@@ -48,7 +48,7 @@ header {
   row-gap: 10px;
   column-gap: 10px;
   grid-auto-flow: row;
-  width: minmax(400px, 60%);
+  width: min(1200px, 100%);
 }
 
 .productContWrapper {
@@ -72,7 +72,6 @@ header {
   font-size: 25px;
   letter-spacing: 0.1em;
   font-weight: 100;
-  display: none;
 }
 
 .productSlogan {

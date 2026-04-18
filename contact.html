@@ -5,11 +5,16 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Contact - The Machine Must Work</title>
+	<title>Schedule a Workflow Review | The Machine Must Work</title>
+	<meta name="description" content="Schedule a free workflow review for creative workflow automation, custom tools, plugins, and media production pipelines.">
+	<meta property="og:title" content="Schedule a Workflow Review | The Machine Must Work">
+	<meta property="og:description" content="Tell us about a creative workflow your team wants to automate.">
+	<meta property="og:type" content="website">
+	<meta property="og:image" content="./images/TMMW_Art_ClipsExporter-AES-SplashImage.jpg">
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&amp;display=swap" rel="stylesheet">
 	<style>
 		.contact-container {
 			width: 100%;
@@ -27,6 +32,31 @@
 
 		.form-group {
 			margin-bottom: 20px;
+		}
+
+		.contact-intro {
+			background-color: #1e1e1e;
+			border: 1px solid slategrey;
+			border-radius: 8px;
+			margin-bottom: 20px;
+			padding: 20px;
+			line-height: 1.6;
+		}
+
+		.contact-intro h1 {
+			color: #ececec;
+			font-size: 24px;
+			font-weight: 400;
+			margin: 0 0 12px;
+		}
+
+		.contact-intro p {
+			margin: 0 0 12px;
+		}
+
+		.contact-intro ul {
+			margin: 0;
+			padding-left: 20px;
 		}
 
 		label {
@@ -256,11 +286,22 @@
 			</svg>
 		</div>
 		<div class="header-right">
-			<h3 class="slogan">Time Saving Solutions</h3>
+			<h3 class="slogan">Schedule a free workflow review</h3>
 		</div>
 	</header>
 
 	<div class="contact-container">
+		<div class="contact-intro">
+			<h1>Tell us about the workflow you want to improve.</h1>
+			<p>A few useful details:</p>
+			<ul>
+				<li>What apps or tools are involved?</li>
+				<li>What repetitive task should be removed?</li>
+				<li>How often does it happen?</li>
+				<li>What should the output be?</li>
+				<li>Are there files, templates, APIs, or internal systems involved?</li>
+			</ul>
+		</div>
 		<form id="contactForm" action="https://script.google.com/macros/s/AKfycbyk_C7ra4INjWQSaWFELaHVopbGAneERWdYT_xmJRCJw9We0tGB7qPovBVw24vOz7PLdQ/exec" method="post">
 			<div class="form-group">
 				<label for="name">Name:</label>
@@ -271,20 +312,20 @@
 				<input type="email" id="email" name="Email" required>
 			</div>
 			<div class="form-group">
-				<label for="message">Message:</label>
-				<textarea id="message" name="Message" required></textarea>
+				<label for="message">Workflow:</label>
+				<textarea id="message" name="Message" placeholder="Example: We need to export clips from Premiere Pro based on spreadsheet data and deliver named files to client folders." required></textarea>
 			</div>
 			<!-- Honeypot field - hidden from humans but visible to bots -->
 			<div class="form-group" style="position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0;" aria-hidden="true">
 				<label for="website">Website:</label>
 				<input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
 			</div>
-			<!-- Time-based check to prevent automated submissions -->
+			<!-- Submission context for backend review -->
 			<input type="hidden" id="formTimestamp" name="formTimestamp" value="">
 			<!-- Additional hidden fields for spam detection -->
 			<input type="hidden" id="userAgent" name="userAgent" value="">
 			<input type="hidden" id="timezone" name="timezone" value="">
-			<button type="submit">Send Message</button>
+			<button type="submit">Request workflow review</button>
 		</form>
 	</div>
 
@@ -317,9 +358,6 @@
 				const email = document.getElementById('email').value.trim();
 				const message = document.getElementById('message').value.trim();
 				const honeypot = document.getElementById('website').value.trim();
-				const timestamp = document.getElementById('formTimestamp').value;
-				const currentTime = Date.now();
-				const timeDiff = currentTime - timestamp;
 
 				// Clear any existing error messages
 				const existingError = document.querySelector('.error-message');
@@ -327,7 +365,7 @@
 					existingError.remove();
 				}
 
-				// 1. HONEYPOT CHECK - Should be empty
+				// Honeypot check - should be empty.
 				if (honeypot) {
 					loadingOverlay.style.display = 'none';
 					console.log('Spam detected: honeypot field filled');
@@ -335,22 +373,19 @@
 					return;
 				}
 
-				// 2. TIME-BASED CHECK - Form submitted too quickly (less than 15 seconds)
-				if (timeDiff < 15000) {
-					loadingOverlay.style.display = 'none';
-					console.log('Spam detected: form submitted too quickly');
-					showError('Please take a moment to review your message before sending.');
-					return;
-				}
-
-				// 3. BASIC FIELD VALIDATION
+				// Basic field validation.
 				if (!name || !email || !message) {
 					loadingOverlay.style.display = 'none';
 					showError('Please fill in all fields.');
 					return;
 				}
 
-				// 4. EMAIL FORMAT VALIDATION
+				if (name.length < 2 || name.length > 100) {
+					loadingOverlay.style.display = 'none';
+					showError('Please enter a valid name.');
+					return;
+				}
+
 				const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 				if (!emailRegex.test(email)) {
 					loadingOverlay.style.display = 'none';
@@ -358,55 +393,24 @@
 					return;
 				}
 
-				// 5. SUSPICIOUS EMAIL DOMAIN CHECK
-				const suspiciousEmailDomains = [
-					'tempmail', 'throwaway', 'guerrillamail', '10minutemail', 'mailinator',
-					'trashmail', 'yopmail', 'sharklasers', 'getnada', 'temp-mail'
-				];
-				const emailLower = email.toLowerCase();
-				if (suspiciousEmailDomains.some(domain => emailLower.includes(domain))) {
+				if (message.length < 10 || message.length > 5000) {
 					loadingOverlay.style.display = 'none';
-					console.log('Spam detected: suspicious email domain');
-					showError('Please use a permanent email address.');
+					showError('Message length must be between 10 and 5000 characters.');
 					return;
 				}
 
-				// 6. WORD COUNT CHECK - Messages with less than 20 words
-				const wordCount = message.trim().split(/\s+/).filter(word => word.length > 0).length;
-				if (wordCount < 20) {
-					loadingOverlay.style.display = 'none';
-					console.log('Spam detected: message too short');
-					showError('Please provide a more detailed message (at least 20 words).');
-					return;
-				}
-
-				// 7. MESSAGE LENGTH CHECK - Too short or suspiciously long
-				if (message.length < 50 || message.length > 5000) {
-					loadingOverlay.style.display = 'none';
-					console.log('Spam detected: inappropriate message length');
-					showError('Message length must be between 50 and 5000 characters.');
-					return;
-				}
-
-				// 8. EXPANDED SPAM KEYWORDS CHECK
 				const spamKeywords = [
-					// Crypto/Financial spam
 					'btc', 'bitcoin', 'crypto', 'cryptocurrency', 'wallet alert', 'blockchain',
 					'ethereum', 'nft', 'investment opportunity', 'double your money', 'get rich',
 					'forex trading', 'binary options', 'pump and dump',
-					// Prize/lottery spam
 					'win iphone', 'win samsung', 'lottery', 'congratulations you won', 
 					'claim your prize', 'you have won', 'lucky winner',
-					// Common spam phrases
 					'click here now', 'act now', 'limited time offer', 'finalize reception',
 					'verify your account', 'suspended account', 'urgent action required',
 					'confirm your identity', 'update your information',
-					// SEO/Marketing spam
 					'seo services', 'increase traffic', 'backlinks', 'rank #1 on google',
 					'web design services', 'free consultation', 'special discount',
-					// Casino/Adult spam
 					'casino', 'viagra', 'cialis', 'weight loss', 'diet pills',
-					// Malicious links
 					'bit.ly', 'tinyurl', 'goo.gl', 't.co'
 				];
 
@@ -423,7 +427,6 @@
 					}
 				}
 
-				// 9. URL/LINK DETECTION - Check for excessive or suspicious links
 				const urlRegex = /(https?:\/\/[^\s]+)|(www\.[^\s]+)|(\b[a-z0-9]+\.(com|net|org|io|xyz|top|online|site|club|info|biz)[^\s]*)/gi;
 				const urls = message.match(urlRegex) || [];
 				if (urls.length > 2) {
@@ -433,17 +436,6 @@
 					return;
 				}
 
-				// 10. EXCESSIVE CAPITALIZATION CHECK
-				const capsCount = (message.match(/[A-Z]/g) || []).length;
-				const lettersCount = (message.match(/[a-zA-Z]/g) || []).length;
-				if (lettersCount > 0 && (capsCount / lettersCount) > 0.5) {
-					loadingOverlay.style.display = 'none';
-					console.log('Spam detected: excessive capitalization');
-					showError('Please use normal capitalization in your message.');
-					return;
-				}
-
-				// 11. REPEATED CHARACTERS CHECK
 				if (/(.)\1{4,}/.test(message)) {
 					loadingOverlay.style.display = 'none';
 					console.log('Spam detected: repeated characters');
@@ -451,41 +443,6 @@
 					return;
 				}
 
-				// 12. SPECIAL CHARACTERS RATIO CHECK
-				const specialChars = message.match(/[^a-zA-Z0-9\s.,!?'"()-]/g) || [];
-				if (specialChars.length / message.length > 0.15) {
-					loadingOverlay.style.display = 'none';
-					console.log('Spam detected: too many special characters');
-					showError('Please reduce the number of special characters in your message.');
-					return;
-				}
-
-				// 13. NAME VALIDATION - Check for suspicious patterns
-				if (name.length < 2 || name.length > 100) {
-					loadingOverlay.style.display = 'none';
-					showError('Please enter a valid name (2-100 characters).');
-					return;
-				}
-
-				// Check for numbers in name (common in spam)
-				if (/\d/.test(name)) {
-					loadingOverlay.style.display = 'none';
-					console.log('Spam detected: numbers in name');
-					showError('Please enter a valid name without numbers.');
-					return;
-				}
-
-				// 14. EMOJI BOMB CHECK
-				const emojiRegex = /[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F1E0}-\u{1F1FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu;
-				const emojiCount = (message.match(emojiRegex) || []).length;
-				if (emojiCount > 5) {
-					loadingOverlay.style.display = 'none';
-					console.log('Spam detected: excessive emojis');
-					showError('Please limit the use of emojis in your message.');
-					return;
-				}
-
-				// 15. DUPLICATE SUBMISSION CHECK (using localStorage)
 				const messageHash = simpleHash(email + message);
 				const lastSubmission = localStorage.getItem('lastSubmission');
 				const lastSubmissionTime = localStorage.getItem('lastSubmissionTime');
@@ -500,7 +457,6 @@
 					}
 				}
 
-				// 16. LANGUAGE PATTERN CHECK - Very simple check for common spam patterns
 				const spamPatterns = [
 					/dear (sir|madam|friend)/i,
 					/i am (mr|mrs|miss|dr)\.?\s+\w+\s+from/i,
