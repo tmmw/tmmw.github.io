@@ -15,60 +15,90 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&amp;display=swap" rel="stylesheet">
-	<style>
-		.contact-button {
-			background-color: #c8c8c8;
-			color: #282828;
-			padding: 10px 20px;
-			border-radius: 8px;
-			font-weight: 500;
-			display: inline-block;
-			transition: all 0.3s ease;
-		}
-		
-		.contact-button:hover {
-			background-color: #ffffff;
-			transform: translateY(-2px);
-		}
+		<style>
+			:root {
+				--page-bg: #282828;
+				--band-bg: #1e1e1e;
+				--panel-bg: #242424;
+				--border: slategrey;
+				--text: #c8c8c8;
+				--heading: #ececec;
+				--muted: #a8a8a8;
+			}
 
-		header {
-			padding: 40px;
-			display: flex;
-			position: relative;
-			min-height: 180px;
-		}
+			.contact-button {
+				background-color: #2d7ff9;
+				color: #ffffff;
+				padding: 10px 20px;
+				border-radius: 8px;
+				font-weight: 500;
+				display: inline-block;
+				transition: all 0.3s ease;
+			}
 
-		.header-left {
-			position: absolute;
-			left: 40px;
-			top: 50%;
-			transform: translateY(-50%);
-		}
+			.contact-button:hover {
+				background-color: #5a9cff;
+				transform: translateY(-2px);
+			}
 
-		.header-right {
-			width: 100%;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-		}
+			header {
+				width: 100%;
+				min-height: 520px;
+				padding: 48px 24px 64px;
+				display: grid;
+				place-items: center;
+				background-color: #141414;
+			}
 
-		.slogan {
-			margin: 0;
-			text-align: center;
-			font-size: 30px;
-			font-weight: 100;
-			letter-spacing: 2px;
-		}
+			.hero-inner {
+				width: min(1100px, 100%);
+				display: grid;
+				justify-items: center;
+				gap: 28px;
+				text-align: center;
+			}
 
-		.header-bottom {
-			display: flex;
-			align-items: center;
-			gap: 20px;
-		}
+			.header-left {
+				position: fixed;
+				right: 24px;
+				bottom: 24px;
+				z-index: 1000;
+				display: grid;
+				place-items: center;
+			}
 
-		footer {
-			text-align: center;
-			padding: 20px;
+			.header-left svg {
+				width: 116px;
+				height: auto;
+			}
+
+			.hero-content {
+				display: grid;
+				justify-items: center;
+				gap: 18px;
+				max-width: 860px;
+			}
+
+			.slogan {
+				margin: 0;
+				text-align: center;
+				font-size: 42px;
+				font-weight: 100;
+				letter-spacing: 2px;
+				color: var(--heading);
+			}
+
+			.hero-subtitle {
+				margin: 0;
+				max-width: 700px;
+				color: var(--text);
+				font-size: 18px;
+				line-height: 1.7;
+			}
+
+			footer {
+				text-align: center;
+				padding: 20px;
 			margin-top: 40px;
 		}
 
@@ -82,33 +112,94 @@
 			transform: scale(1.1);
 		}
 
-		.main-section {
-			padding: 20px;
-			margin-bottom: 40px;
-			width: 100%;
-		}
+			.main-section {
+				padding: 72px 24px;
+				width: 100%;
+			}
 
-		.main-section:nth-child(even) {
-			background-color: transparent;
-		}
+			.section-band {
+				background-color: var(--band-bg);
+			}
 
-		.main-section:nth-child(odd) {
-			background-color: #1e1e1e;
-		}
+			.section-title {
+				color: var(--heading);
+				font-size: 24px;
+				margin-bottom: 30px;
+				text-align: left;
+				letter-spacing: 3px;
+			}
 
-		.section-title {
-			color: #ececec;
-			font-size: 24px;
-			margin-bottom: 30px;
-			text-align: center;
-			letter-spacing: 3px;
-		}
+			.section-inner {
+				width: min(1120px, 100%);
+				margin: 0 auto;
+			}
 
-		#productsCont {
-			display: grid;
-			grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-			gap: 30px;
-			max-width: 1200px;
+			.section-intro {
+				max-width: 760px;
+				margin: 0 0 32px;
+				color: var(--text);
+				font-size: 17px;
+				line-height: 1.7;
+			}
+
+			.centered-section {
+				text-align: center;
+			}
+
+			.centered-section .section-title,
+			.centered-section .section-intro {
+				margin-left: auto;
+				margin-right: auto;
+				text-align: center;
+			}
+
+			.service-grid,
+			.process-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+				gap: 18px;
+			}
+
+			.service-card,
+			.process-step,
+			.workflow-examples li {
+				background-color: rgb(1, 1, 1);
+				/* border: 1px solid var(--border); */
+				border-radius: 8px;
+				padding: 20px;
+				line-height: 1.6;
+			}
+
+			.service-card h3,
+			.process-step h3 {
+				color: #ffffff;
+				font-size: 18px;
+				font-weight: 400;
+				margin: 0 0 10px;
+			}
+
+			.service-card p,
+			.process-step p {
+				margin: 0;
+				color: var(--text);
+			}
+
+			.process-number {
+				display: inline-grid;
+				place-items: center;
+				width: 34px;
+				height: 34px;
+				margin-bottom: 16px;
+				border: 1px solid var(--border);
+				border-radius: 8px;
+				color: #ffffff;
+			}
+
+			#productsCont {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+				gap: 30px;
+				max-width: 1200px;
 			margin: 0 auto;
 		}
 
@@ -150,28 +241,19 @@
 			font-size: 12px;
 		}
 
-		.workflow-examples {
-			display: grid;
-			grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-			gap: 12px;
-			list-style-type: none;
-			padding-left: 0;
-			margin: 28px auto;
-			text-align: left;
-			max-width: 900px;
-		}
+			.workflow-examples {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+				gap: 12px;
+				list-style-type: none;
+				padding-left: 0;
+				margin: 0;
+				text-align: left;
+			}
 
-		.workflow-examples li {
-			background-color: #282828;
-			border: 1px solid slategrey;
-			border-radius: 8px;
-			padding: 14px 16px;
-			line-height: 1.5;
-		}
-
-		.custom-solutions {
-			text-align: center;
-			color: #c8c8c8;
+			.custom-solutions {
+				text-align: center;
+				color: #c8c8c8;
 			max-width: 1200px;
 			margin: 0 auto;
 		}
@@ -181,32 +263,102 @@
 			line-height: 1.6;
 		}
 
-		.custom-solutions-logos {
-			display: flex;
-			justify-content: center;
-			gap: 30px;
-			margin-top: 20px;
-		}
+			.custom-solutions-logos {
+				display: grid;
+				grid-template-columns: repeat(6, minmax(90px, 1fr));
+				justify-content: center;
+				gap: 18px;
+				margin-top: 32px;
+			}
 
-		.custom-solutions-logos img {
-			width: 48px;
-			height: 48px;
+			.custom-solutions-logos img {
+				width: 48px;
+				height: 48px;
 			object-fit: contain;
 			transition: all 0.3s ease;
-		}
+			}
 
-		.custom-solutions-logos div {
-			display: flex;
-			justify-content: center;
-			align-items: center;
-		}
-	</style>
+			.custom-solutions-logos div {
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				gap: 10px;
+				min-height: 110px;
+				padding: 16px 10px;
+				background-color: var(--panel-bg);
+				border: 1px solid var(--border);
+				border-radius: 8px;
+				color: var(--text);
+				font-size: 13px;
+			}
+
+			.final-cta {
+				display: grid;
+				justify-items: center;
+				gap: 18px;
+				text-align: center;
+			}
+
+			.final-cta h2 {
+				margin: 0;
+				color: var(--heading);
+				font-size: 28px;
+				font-weight: 400;
+				letter-spacing: 1px;
+			}
+
+			.is-hidden {
+				display: none;
+			}
+
+			@media only screen and (max-width: 760px) {
+				header {
+					min-height: auto;
+					padding: 36px 18px 48px;
+				}
+
+				.header-left {
+					right: 16px;
+					bottom: 16px;
+				}
+
+				.header-left svg {
+					width: 100px;
+				}
+
+				.slogan {
+					font-size: 31px;
+				}
+
+				.hero-subtitle {
+					font-size: 16px;
+				}
+
+				.main-section {
+					padding: 52px 18px;
+				}
+
+				.section-title {
+					text-align: left;
+				}
+
+				.custom-solutions-logos {
+					grid-template-columns: repeat(2, minmax(120px, 1fr));
+				}
+
+				.workflow-examples {
+					grid-template-columns: 1fr;
+				}
+			}
+		</style>
 </head>
 
 <body>
 	<header>
-		<div class="header-left">
-			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1000 1000" width="100">
+		<div class="hero-inner">
+			<div class="header-left">
+				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1000 1000" width="100">
 				<defs>
 					<clipPath id="clip-path">
 						<rect x="1338.87" y="944.5" width="3842" height="2162" fill="none" />
@@ -248,50 +400,120 @@
 						<path d="M846.7,848.77H833.39L812,820.6a14.22,14.22,0,0,1-1.46-2.15h-.18v30.32H800.11V787.19h10.22v28.94h.18A13.72,13.72,0,0,1,812,814l20.65-26.84h12.24l-24.18,29.55Z" fill="#fff" />
 					</g>
 				</g>
-			</svg>
-		</div>
-		<div class="header-right">
-			<h1 class="slogan">Workflow automation for creative teams</h1>
+				</svg>
+			</div>
+			<div class="hero-content">
+				<h1 class="slogan">Workflow automation for creative teams</h1>
+				<p class="hero-subtitle">Custom tools, plugins, and pipeline automations for media production workflows.</p>
+				<a href="contact.html" class="contact-button">Schedule a free workflow review</a>
+			</div>
 		</div>
 	</header>
 
 	<section class="main-section">
-		<h2 class="section-title">Custom Workflow Tools</h2>
-		<div class="custom-solutions">
-			<p>We build custom tools, plugins, and pipeline automations for media production workflows.</p>
-			<p>Automate repetitive tasks, connect creative software with your internal systems, and give teams faster ways to move from brief to delivery.</p>
-			<a href="contact.html" class="contact-button">Schedule a free workflow review</a>
-			<ul class="workflow-examples">
-				<li>Automate repetitive editorial and production tasks</li>
-				<li>Batch process media, metadata, captions, templates, and exports</li>
-				<li>Connect creative apps with spreadsheets, databases, file systems, review tools, and delivery platforms</li>
-				<li>Build internal tools for producers, editors, designers, and operators</li>
-				<li>Export large sets of clips with naming rules, burn-ins, and effects preserved</li>
-				<li>Replace text across template-based video campaigns</li>
-			</ul>
-			<div class="custom-solutions-logos">
-				<div>
-					<img src="./images/premiere-pro.png" alt="Premiere Pro">
+		<div class="section-inner">
+			<h2 class="section-title">How A Workflow Review Works</h2>
+			<div class="process-grid">
+				<div class="process-step">
+					<span class="process-number">1</span>
+					<h3>Review the workflow</h3>
+					<p>We map the recurring task, tools, inputs, outputs, and failure points.</p>
 				</div>
-				<div>
-					<img src="./images/after-effects.png" alt="After Effects">
+				<div class="process-step">
+					<span class="process-number">2</span>
+					<h3>Prototype the automation</h3>
+					<p>We build a focused version your team can test against real projects.</p>
 				</div>
-				<div>
-					<img src="./images/photoshop.png" alt="Photoshop">
-				</div>
-				<div>
-					<img src="./images/davinci-resolve.png" alt="DaVinci Resolve">
+				<div class="process-step">
+					<span class="process-number">3</span>
+					<h3>Integrate and support</h3>
+					<p>We refine the tool, document usage, and support the workflow as it evolves.</p>
 				</div>
 			</div>
 		</div>
 	</section>
-	
-	<section class="main-section">
-		<h3 class="slogan">Our tools are used by teams to gain back their time.</h3>
+
+	<section class="main-section section-band">
+		<div class="section-inner">
+			<h2 class="section-title">What We Automate</h2>
+			<p class="section-intro">Automate repetitive tasks, connect creative software with your internal systems, and give teams faster ways to move from brief to delivery.</p>
+			<div class="service-grid">
+				<div class="service-card">
+					<h3>Repetitive Production Tasks</h3>
+					<p>Turn recurring editorial, design, and delivery steps into reliable one-click tools.</p>
+				</div>
+				<div class="service-card">
+					<h3>Batch Media Processing</h3>
+					<p>Process media, metadata, captions, templates, exports, and naming rules at scale.</p>
+				</div>
+				<div class="service-card">
+					<h3>System Integrations</h3>
+					<p>Connect creative apps with spreadsheets, databases, file systems, review tools, and delivery platforms.</p>
+				</div>
+				<div class="service-card">
+					<h3>Internal Team Tools</h3>
+					<p>Build focused interfaces for producers, editors, designers, operators, and client-facing teams.</p>
+				</div>
+			</div>
+		</div>
 	</section>
 
-
 	<section class="main-section">
+		<div class="section-inner">
+			<h2 class="section-title">Common Workflows</h2>
+			<p class="section-intro">Start with the bottleneck your team already knows too well.</p>
+			<ul class="workflow-examples">
+				<li>Campaign versioning across markets, formats, and deliverables</li>
+				<li>Clip exports, delivery prep, burn-ins, and naming rules</li>
+				<li>Template text replacement for high-volume video production</li>
+				<li>Asset preparation for social, ecommerce, and publishing teams</li>
+				<li>Review and approval handoffs between producers and operators</li>
+				<li>Metadata, spreadsheet, folder, and file naming workflows</li>
+			</ul>
+		</div>
+	</section>
+
+	<section class="main-section section-band centered-section">
+		<div class="section-inner">
+			<h2 class="section-title">Creative App Capabilities</h2>
+			<p class="section-intro">Built around the tools your creative teams already use.</p>
+			<div class="custom-solutions-logos">
+				<div>
+					<img src="./images/premiere-pro.png" alt="Premiere Pro">
+					<span>Premiere Pro</span>
+				</div>
+				<div>
+					<img src="./images/after-effects.png" alt="After Effects">
+					<span>After Effects</span>
+				</div>
+				<div>
+					<img src="./images/photoshop.png" alt="Photoshop">
+					<span>Photoshop</span>
+				</div>
+				<div>
+					<img src="./images/illustrator.svg" alt="Illustrator">
+					<span>Illustrator</span>
+				</div>
+				<div>
+					<img src="./images/davinci-resolve.png" alt="DaVinci Resolve">
+					<span>DaVinci Resolve</span>
+				</div>
+				<div>
+					<img src="./images/airtable.svg" alt="Airtable">
+					<span>Airtable</span>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="main-section section-band">
+		<div class="section-inner final-cta">
+			<h2>Have a workflow your team keeps repeating?</h2>
+			<a href="contact.html" class="contact-button">Schedule a free workflow review</a>
+		</div>
+	</section>
+
+	<section class="main-section is-hidden" aria-hidden="true">
 		<h2 class="section-title">Our Products</h2>
 		<div id="productsCont">
 			<div class="productContWrapper">
