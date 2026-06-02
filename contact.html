@@ -16,85 +16,86 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&amp;display=swap" rel="stylesheet">
 	<style>
-		.contact-container {
-			width: 100%;
-			max-width: 600px;
-			padding: 20px;
-			margin: 20px auto;
+		:root {
+			--page-bg: #282828;
+			--hero-bg: #141414;
+			--band-bg: #1e1e1e;
+			--card-bg: rgb(1, 1, 1);
+			--panel-bg: #242424;
+			--border: slategrey;
+			--text: #c8c8c8;
+			--heading: #ececec;
+			--blue: #2d7ff9;
+			--blue-hover: #5a9cff;
+			--muted: #a8a8a8;
 		}
 
-		.contact-form {
-			background-color: #1e1e1e;
-			padding: 30px;
-			border-radius: 10px;
-			border: 1px solid slategrey;
-		}
+			.contact-container {
+				width: 100%;
+				max-width: 1120px;
+				padding: 72px 24px;
+				margin: 0 auto;
+			}
 
-		.form-group {
-			margin-bottom: 20px;
-		}
+			.workflow-form {
+				background-color: var(--card-bg);
+				padding: 30px;
+				border-radius: 8px;
+				display: grid;
+				gap: 20px;
+			}
 
-		.contact-intro {
-			background-color: #1e1e1e;
-			border: 1px solid slategrey;
-			border-radius: 8px;
-			margin-bottom: 20px;
-			padding: 20px;
-			line-height: 1.6;
-		}
-
-		.contact-intro h1 {
-			color: #ececec;
-			font-size: 24px;
-			font-weight: 400;
-			margin: 0 0 12px;
-		}
-
-		.contact-intro p {
-			margin: 0 0 12px;
-		}
-
-		.contact-intro ul {
-			margin: 0;
-			padding-left: 20px;
-		}
+			.form-group {
+				margin: 0;
+			}
 
 		label {
 			display: block;
-			margin-bottom: 5px;
-			color: #c8c8c8;
+			margin-bottom: 8px;
+			color: var(--heading);
 		}
 
 		input,
 		textarea {
 			width: 100%;
-			padding: 8px;
+			padding: 12px;
 			border: 1px solid #444;
 			border-radius: 4px;
-			background-color: #282828;
-			color: #c8c8c8;
+			background-color: #1e1e1e;
+			color: var(--text);
 			font-family: inherit;
+			font-size: 15px;
+			line-height: 1.5;
 		}
 
-		textarea {
-			min-height: 150px;
-			resize: vertical;
+		input:focus,
+		textarea:focus {
+			border-color: var(--blue);
+			box-shadow: 0 0 0 2px rgba(45, 127, 249, 0.24);
+			outline: none;
 		}
 
-		button {
-			background-color: #c8c8c8;
-			color: #282828;
-			padding: 10px 20px;
+			textarea {
+				min-height: 220px;
+				resize: vertical;
+			}
+
+			button {
+				background-color: var(--blue);
+				color: #ffffff;
+				padding: 12px 20px;
 			border: none;
-			border-radius: 4px;
+			border-radius: 8px;
 			cursor: pointer;
 			font-family: inherit;
-			font-weight: 500;
-			transition: background-color 0.3s;
-		}
+				font-weight: 500;
+				transition: all 0.3s ease;
+				justify-self: end;
+			}
 
 		button:hover {
-			background-color: #ffffff;
+			background-color: var(--blue-hover);
+			transform: translateY(-2px);
 		}
 
 		.home-button {
@@ -114,36 +115,55 @@
 		}
 
 		header {
-			padding: 40px;
-			display: flex;
-			position: relative;
-			min-height: 180px;
 			width: 100%;
-			box-sizing: border-box;
-			padding-right: calc(40px + 17px);
-			/* Account for scrollbar width */
+			min-height: 180px;
+			padding: 24px 24px 28px;
+			display: grid;
+			place-items: center;
+			position: relative;
+			background-color: var(--hero-bg);
+			overflow: hidden;
 		}
 
 		.header-left {
-			position: absolute;
-			left: 40px;
-			top: 50%;
-			transform: translateY(-50%);
+			position: fixed;
+			right: 24px;
+			bottom: 24px;
+			z-index: 1000;
+			display: grid;
+			place-items: center;
+		}
+
+		.header-left svg {
+			width: 116px;
+			height: auto;
 		}
 
 		.header-right {
-			width: 100%;
-			display: flex;
-			align-items: center;
-			justify-content: center;
+			width: min(860px, 100%);
+			display: grid;
+			justify-items: center;
+			gap: 16px;
+			text-align: center;
+			position: relative;
+			z-index: 1;
 		}
 
 		.slogan {
 			margin: 0;
 			text-align: center;
-			font-size: 30px;
+			font-size: 42px;
 			font-weight: 100;
 			letter-spacing: 2px;
+			color: var(--heading);
+		}
+
+		.hero-subtitle {
+			margin: 0;
+			max-width: 720px;
+			color: var(--text);
+			font-size: 18px;
+			line-height: 1.7;
 		}
 
 		footer {
@@ -163,11 +183,11 @@
 		}
 
 		.error-message {
-			color: #ff4444;
+			color: #ffb2b2;
 			margin-bottom: 20px;
-			padding: 10px;
-			background-color: #ffeeee;
-			border-radius: 4px;
+			padding: 12px;
+			background-color: #311111;
+			border-radius: 8px;
 			display: none;
 		}
 
@@ -175,7 +195,7 @@
 			position: fixed;
 			left: 20px;
 			bottom: 20px;
-			background-color: #1e1e1e;
+			background-color: var(--card-bg);
 			color: #c8c8c8;
 			padding: 10px 20px;
 			border-radius: 8px;
@@ -188,7 +208,7 @@
 		}
 
 		.back-button:hover {
-			background-color: #282828;
+			background-color: #080f1c;
 			transform: translateY(-2px);
 		}
 
@@ -207,9 +227,9 @@
 		}
 
 		.loading-spinner {
-			background-color: #1e1e1e;
+			background-color: var(--card-bg);
 			padding: 20px;
-			border-radius: 10px;
+			border-radius: 8px;
 			text-align: center;
 			color: #c8c8c8;
 		}
@@ -229,6 +249,34 @@
 		@keyframes spin {
 			to {
 				transform: rotate(360deg);
+			}
+		}
+
+		@media only screen and (max-width: 760px) {
+			header {
+				min-height: auto;
+				padding: 24px 18px 28px;
+			}
+
+			.slogan {
+				font-size: 31px;
+			}
+
+			.hero-subtitle {
+				font-size: 16px;
+			}
+
+			.contact-container {
+				padding: 52px 18px;
+			}
+
+			.header-left {
+				right: 16px;
+				bottom: 16px;
+			}
+
+			.header-left svg {
+				width: 100px;
 			}
 		}
 	</style>
@@ -286,35 +334,29 @@
 			</svg>
 		</div>
 		<div class="header-right">
-			<h3 class="slogan">Schedule a free workflow review</h3>
+			<h1 class="slogan">Schedule a free workflow review</h1>
+			<p class="hero-subtitle">Tell us what your team repeats. We'll take care of the rest.</p>
 		</div>
 	</header>
 
-	<div class="contact-container">
-		<div class="contact-intro">
-			<h1>Tell us about the workflow you want to improve.</h1>
-			<p>A few useful details:</p>
-			<ul>
-				<li>What apps or tools are involved?</li>
-				<li>What repetitive task should be removed?</li>
-				<li>How often does it happen?</li>
-				<li>What should the output be?</li>
-				<li>Are there files, templates, APIs, or internal systems involved?</li>
-			</ul>
-		</div>
-		<form id="contactForm" action="https://script.google.com/macros/s/AKfycbyk_C7ra4INjWQSaWFELaHVopbGAneERWdYT_xmJRCJw9We0tGB7qPovBVw24vOz7PLdQ/exec" method="post">
-			<div class="form-group">
-				<label for="name">Name:</label>
-				<input type="text" id="name" name="Name" required>
-			</div>
-			<div class="form-group">
-				<label for="email">Email:</label>
-				<input type="email" id="email" name="Email" required>
-			</div>
-			<div class="form-group">
-				<label for="message">Workflow:</label>
-				<textarea id="message" name="Message" placeholder="Example: We need to export clips from Premiere Pro based on spreadsheet data and deliver named files to client folders." required></textarea>
-			</div>
+		<div class="contact-container">
+			<form id="contactForm" class="workflow-form" action="https://script.google.com/macros/s/AKfycbyk_C7ra4INjWQSaWFELaHVopbGAneERWdYT_xmJRCJw9We0tGB7qPovBVw24vOz7PLdQ/exec" method="post">
+				<div class="form-group">
+					<label for="name">Name</label>
+					<input type="text" id="name" name="Name" required>
+				</div>
+				<div class="form-group">
+					<label for="email">Email</label>
+					<input type="email" id="email" name="Email" required>
+				</div>
+				<div class="form-group">
+					<label for="message">Workflow</label>
+					<textarea id="message" name="Message" placeholder="What apps or tools are involved?
+What repetitive task should be removed?
+What should the output be?
+Are there files, templates, APIs, or internal systems involved?" required></textarea>
+				</div>
+				<button type="submit">Request workflow review</button>
 			<!-- Honeypot field - hidden from humans but visible to bots -->
 			<div class="form-group" style="position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0;" aria-hidden="true">
 				<label for="website">Website:</label>
@@ -325,7 +367,6 @@
 			<!-- Additional hidden fields for spam detection -->
 			<input type="hidden" id="userAgent" name="userAgent" value="">
 			<input type="hidden" id="timezone" name="timezone" value="">
-			<button type="submit">Request workflow review</button>
 		</form>
 	</div>
 

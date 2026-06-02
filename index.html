@@ -42,20 +42,94 @@
 			}
 
 			header {
+				position: relative;
 				width: 100%;
 				min-height: 520px;
 				padding: 48px 24px 64px;
 				display: grid;
 				place-items: center;
 				background-color: #141414;
+				overflow: hidden;
 			}
 
 			.hero-inner {
+				position: relative;
+				z-index: 1;
 				width: min(1100px, 100%);
 				display: grid;
 				justify-items: center;
 				gap: 28px;
 				text-align: center;
+			}
+
+			.workflow-map {
+				position: absolute;
+				inset: 0;
+				z-index: 0;
+				opacity: 0.55;
+				pointer-events: none;
+			}
+
+			.workflow-map::before,
+			.workflow-map::after {
+				content: "";
+				position: absolute;
+				inset: 12% 8%;
+				background:
+					linear-gradient(90deg, transparent 0 12%, rgba(45, 127, 249, 0.34) 12% 88%, transparent 88%) 0 35% / 100% 1px no-repeat,
+					linear-gradient(90deg, transparent 0 22%, rgba(45, 127, 249, 0.24) 22% 78%, transparent 78%) 0 62% / 100% 1px no-repeat,
+					linear-gradient(180deg, transparent 0 28%, rgba(45, 127, 249, 0.24) 28% 70%, transparent 70%) 23% 0 / 1px 100% no-repeat,
+					linear-gradient(180deg, transparent 0 25%, rgba(45, 127, 249, 0.2) 25% 75%, transparent 75%) 50% 0 / 1px 100% no-repeat,
+					linear-gradient(180deg, transparent 0 30%, rgba(45, 127, 249, 0.24) 30% 68%, transparent 68%) 77% 0 / 1px 100% no-repeat;
+			}
+
+			.workflow-map::after {
+				background:
+					radial-gradient(circle, #2d7ff9 0 3px, transparent 4px) 12% 35% / 100% 100% no-repeat,
+					radial-gradient(circle, #2d7ff9 0 3px, transparent 4px) 23% 62% / 100% 100% no-repeat,
+					radial-gradient(circle, #2d7ff9 0 3px, transparent 4px) 50% 35% / 100% 100% no-repeat,
+					radial-gradient(circle, #2d7ff9 0 3px, transparent 4px) 77% 62% / 100% 100% no-repeat,
+					radial-gradient(circle, #2d7ff9 0 3px, transparent 4px) 88% 35% / 100% 100% no-repeat;
+				filter: drop-shadow(0 0 12px rgba(45, 127, 249, 0.55));
+			}
+
+			.workflow-pulse {
+				position: absolute;
+				top: 35%;
+				left: 10%;
+				width: 8px;
+				height: 8px;
+				background-color: #2d7ff9;
+				border-radius: 50%;
+				box-shadow: 0 0 22px rgba(45, 127, 249, 0.9);
+				animation: workflowPulse 6s ease-in-out infinite;
+			}
+
+			.workflow-pulse:nth-child(2) {
+				top: 62%;
+				animation-delay: 1.8s;
+			}
+
+			.workflow-pulse:nth-child(3) {
+				top: 35%;
+				animation-delay: 3.3s;
+			}
+
+			@keyframes workflowPulse {
+				0% {
+					transform: translateX(0);
+					opacity: 0;
+				}
+
+				10%,
+				80% {
+					opacity: 1;
+				}
+
+				100% {
+					transform: translateX(78vw);
+					opacity: 0;
+				}
 			}
 
 			.header-left {
@@ -94,6 +168,10 @@
 				color: var(--text);
 				font-size: 18px;
 				line-height: 1.7;
+			}
+
+			.hero-content .contact-button {
+				margin-top: 12px;
 			}
 
 			footer {
@@ -154,15 +232,58 @@
 			}
 
 			.service-grid,
-			.process-grid {
+			.process-grid,
+			.before-after-grid,
+			.systems-grid {
 				display: grid;
 				grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
 				gap: 18px;
 			}
 
+			.before-after-grid {
+				grid-template-columns: 1fr 64px 1fr;
+				align-items: stretch;
+			}
+
+			.process-section .section-inner {
+				position: relative;
+			}
+
+			.process-grid {
+				position: relative;
+			}
+
+			.process-grid::before,
+			.process-grid::after {
+				content: "";
+				position: absolute;
+				left: 12%;
+				right: 12%;
+				top: 37px;
+				height: 2px;
+				pointer-events: none;
+			}
+
+			.process-grid::before {
+				background-color: #3f3f3f;
+			}
+
+			.process-grid::after {
+				background-color: #2d7ff9;
+				transform: scaleX(1);
+				transform-origin: left;
+				transition: transform 700ms ease-out;
+			}
+
+			.process-section.is-animated .process-grid::after {
+				transform: scaleX(0);
+			}
+
 			.service-card,
 			.process-step,
-			.workflow-examples li {
+			.workflow-examples li,
+			.before-after-card,
+			.system-card {
 				background-color: rgb(1, 1, 1);
 				/* border: 1px solid var(--border); */
 				border-radius: 8px;
@@ -170,8 +291,52 @@
 				line-height: 1.6;
 			}
 
+			.process-step {
+				position: relative;
+				z-index: 1;
+				opacity: 1;
+				transform: translateY(0);
+				transition:
+					opacity 320ms ease-out,
+					transform 320ms ease-out,
+					background-color 180ms ease-out;
+			}
+
+			.process-section.is-animated .process-step {
+				opacity: 0;
+				transform: translateY(14px);
+			}
+
+			.process-step:nth-child(2) {
+				transition-delay: 110ms;
+			}
+
+			.process-step:nth-child(3) {
+				transition-delay: 220ms;
+			}
+
+			.process-section.is-animated.is-visible .process-grid::after {
+				transform: scaleX(1);
+			}
+
+			.process-section.is-animated.is-visible .process-step {
+				opacity: 1;
+				transform: translateY(0);
+			}
+
+			.process-step:hover,
+			.process-step:focus-visible {
+				background-color: #080f1c;
+				outline: none;
+				transform: translateY(-4px);
+				transition-delay: 0ms;
+			}
+
 			.service-card h3,
-			.process-step h3 {
+			.process-step h3,
+			.before-after-card h3,
+			.workflow-examples h3,
+			.system-card h3 {
 				color: #ffffff;
 				font-size: 18px;
 				font-weight: 400;
@@ -179,9 +344,33 @@
 			}
 
 			.service-card p,
-			.process-step p {
+			.process-step p,
+			.workflow-examples p,
+			.system-card p {
 				margin: 0;
 				color: var(--text);
+			}
+
+			.process-detail {
+				display: block;
+				max-height: 0;
+				margin-top: 0;
+				overflow: hidden;
+				color: #7fb0ff;
+				font-size: 13px;
+				line-height: 1.5;
+				opacity: 0;
+				transition:
+					max-height 220ms ease-out,
+					margin-top 220ms ease-out,
+					opacity 180ms ease-out;
+			}
+
+			.process-step:hover .process-detail,
+			.process-step:focus-visible .process-detail {
+				max-height: 60px;
+				margin-top: 12px;
+				opacity: 1;
 			}
 
 			.process-number {
@@ -193,6 +382,19 @@
 				border: 1px solid var(--border);
 				border-radius: 8px;
 				color: #ffffff;
+				background-color: rgb(1, 1, 1);
+				transition:
+					background-color 220ms ease-out,
+					border-color 220ms ease-out,
+					box-shadow 220ms ease-out;
+			}
+
+			.process-section.is-visible .process-number,
+			.process-step:hover .process-number,
+			.process-step:focus-visible .process-number {
+				background-color: #2d7ff9;
+				border-color: #2d7ff9;
+				box-shadow: 0 0 20px rgba(45, 127, 249, 0.35);
 			}
 
 			#productsCont {
@@ -251,10 +453,78 @@
 				text-align: left;
 			}
 
+			.workflow-examples li {
+				position: relative;
+				min-height: 148px;
+				overflow: hidden;
+				transition:
+					background-color 180ms ease-out,
+					transform 180ms ease-out;
+			}
+
+			.workflow-examples li::after {
+				content: "";
+				position: absolute;
+				left: 20px;
+				right: 20px;
+				bottom: 16px;
+				height: 2px;
+				background-color: #2d7ff9;
+				transform: scaleX(0);
+				transform-origin: left;
+				transition: transform 220ms ease-out;
+			}
+
+			.workflow-examples li:hover,
+			.workflow-examples li:focus-within {
+				background-color: #080f1c;
+				transform: translateY(-3px);
+			}
+
+			.workflow-examples li:hover::after,
+			.workflow-examples li:focus-within::after {
+				transform: scaleX(1);
+			}
+
+			.workflow-examples p {
+				max-height: 0;
+				overflow: hidden;
+				opacity: 0;
+				transition:
+					max-height 220ms ease-out,
+					opacity 180ms ease-out;
+			}
+
+			.workflow-examples li:hover p,
+			.workflow-examples li:focus-within p {
+				max-height: 90px;
+				opacity: 1;
+			}
+
+			.before-after-card ul,
+			.system-card ul {
+				margin: 0;
+				padding-left: 20px;
+				color: var(--text);
+			}
+
+			.before-after-card li,
+			.system-card li {
+				margin-bottom: 8px;
+			}
+
+			.before-after-arrow {
+				display: grid;
+				place-items: center;
+				color: #2d7ff9;
+				font-size: 28px;
+				line-height: 1;
+			}
+
 			.custom-solutions {
 				text-align: center;
 				color: #c8c8c8;
-			max-width: 1200px;
+				max-width: 1200px;
 			margin: 0 auto;
 		}
 
@@ -263,12 +533,252 @@
 			line-height: 1.6;
 		}
 
+			.capability-layout {
+				position: relative;
+				margin-top: 32px;
+				padding: 52px 0;
+			}
+
 			.custom-solutions-logos {
+				position: relative;
+				z-index: 1;
 				display: grid;
 				grid-template-columns: repeat(6, minmax(90px, 1fr));
 				justify-content: center;
 				gap: 18px;
-				margin-top: 32px;
+			}
+
+			.capability-pulses {
+				position: absolute;
+				inset: 0;
+				z-index: 0;
+				pointer-events: none;
+			}
+
+			.capability-pulse {
+				position: absolute;
+				z-index: 1;
+				width: 10px;
+				height: 10px;
+				margin: -5px 0 0 -5px;
+				border-radius: 50%;
+				background-color: #2d7ff9;
+				box-shadow: 0 0 18px rgba(45, 127, 249, 0.95);
+			}
+
+			.capability-pulse.one {
+				animation: appPulseTopOne 5.2s ease-in-out infinite;
+			}
+
+			.capability-pulse.two {
+				animation: appPulseTopTwo 5.8s ease-in-out infinite;
+				animation-delay: 0.8s;
+			}
+
+			.capability-pulse.three {
+				animation: appPulseBottomOne 6.2s ease-in-out infinite;
+				animation-delay: 1.4s;
+			}
+
+			.capability-pulse.four {
+				animation: appPulseBottomTwo 5.6s ease-in-out infinite;
+				animation-delay: 2s;
+			}
+
+			.capability-pulse.fan-one,
+			.capability-pulse.fan-two,
+			.capability-pulse.fan-three {
+				background-color: #f6c343;
+				box-shadow: 0 0 18px rgba(246, 195, 67, 0.85);
+			}
+
+			.capability-pulse.fan-one {
+				animation: airtableFanOne 4.6s ease-in-out infinite;
+				animation-delay: 3s;
+			}
+
+			.capability-pulse.fan-two {
+				animation: airtableFanTwo 4.6s ease-in-out infinite;
+				animation-delay: 3s;
+			}
+
+			.capability-pulse.fan-three {
+				animation: airtableFanThree 4.6s ease-in-out infinite;
+				animation-delay: 3s;
+			}
+
+			@keyframes appPulseTopOne {
+				0% {
+					left: 8.333%;
+					top: 50%;
+				}
+
+				18% {
+					left: 8.333%;
+					top: 30px;
+				}
+
+				58% {
+					left: 58.333%;
+					top: 30px;
+				}
+
+				84% {
+					left: 91.667%;
+					top: 30px;
+				}
+
+				100% {
+					left: 91.667%;
+					top: 50%;
+				}
+			}
+
+			@keyframes appPulseTopTwo {
+				0% {
+					left: 25%;
+					top: 50%;
+				}
+
+				20% {
+					left: 25%;
+					top: 30px;
+				}
+
+				68% {
+					left: 58.333%;
+					top: 30px;
+				}
+
+				86% {
+					left: 91.667%;
+					top: 30px;
+				}
+
+				100% {
+					left: 91.667%;
+					top: 50%;
+				}
+			}
+
+			@keyframes appPulseBottomOne {
+				0% {
+					left: 91.667%;
+					top: 50%;
+				}
+
+				20% {
+					left: 91.667%;
+					top: calc(100% - 30px);
+				}
+
+				70% {
+					left: 25%;
+					top: calc(100% - 30px);
+				}
+
+				86% {
+					left: 8.333%;
+					top: calc(100% - 30px);
+				}
+
+				100% {
+					left: 8.333%;
+					top: 50%;
+				}
+			}
+
+			@keyframes appPulseBottomTwo {
+				0% {
+					left: 58.333%;
+					top: 50%;
+				}
+
+				24% {
+					left: 58.333%;
+					top: calc(100% - 30px);
+				}
+
+				70% {
+					left: 25%;
+					top: calc(100% - 30px);
+				}
+
+				86% {
+					left: 8.333%;
+					top: calc(100% - 30px);
+				}
+
+				100% {
+					left: 8.333%;
+					top: 50%;
+				}
+			}
+
+			@keyframes airtableFanOne {
+				0% {
+					left: 91.667%;
+					top: 50%;
+				}
+
+				22% {
+					left: 91.667%;
+					top: calc(100% - 30px);
+				}
+
+				76% {
+					left: 25%;
+					top: calc(100% - 30px);
+				}
+
+				100% {
+					left: 25%;
+					top: 50%;
+				}
+			}
+
+			@keyframes airtableFanTwo {
+				0% {
+					left: 91.667%;
+					top: 50%;
+				}
+
+				20% {
+					left: 91.667%;
+					top: calc(100% - 30px);
+				}
+
+				72% {
+					left: 58.333%;
+					top: calc(100% - 30px);
+				}
+
+				100% {
+					left: 58.333%;
+					top: 50%;
+				}
+			}
+
+			@keyframes airtableFanThree {
+				0% {
+					left: 91.667%;
+					top: 50%;
+				}
+
+				20% {
+					left: 91.667%;
+					top: calc(100% - 30px);
+				}
+
+				62% {
+					left: 75%;
+					top: calc(100% - 30px);
+				}
+
+				100% {
+					left: 75%;
+					top: 50%;
+				}
 			}
 
 			.custom-solutions-logos img {
@@ -278,7 +788,9 @@
 			transition: all 0.3s ease;
 			}
 
-			.custom-solutions-logos div {
+			.app-logo-card {
+				position: relative;
+				z-index: 1;
 				display: flex;
 				flex-direction: column;
 				justify-content: center;
@@ -291,6 +803,17 @@
 				border-radius: 8px;
 				color: var(--text);
 				font-size: 13px;
+			}
+
+			.systems-grid {
+				grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+			}
+
+			.cta-note {
+				margin: 0;
+				color: var(--muted);
+				font-size: 14px;
+				line-height: 1.6;
 			}
 
 			.final-cta {
@@ -350,12 +873,85 @@
 				.workflow-examples {
 					grid-template-columns: 1fr;
 				}
-			}
+
+				.before-after-grid {
+					grid-template-columns: 1fr;
+				}
+
+				.process-grid::before,
+				.process-grid::after {
+					left: 17px;
+					right: auto;
+					top: 20px;
+					bottom: 20px;
+					width: 2px;
+					height: auto;
+					transform-origin: top;
+				}
+
+				.process-grid::after {
+					transform: scaleY(1);
+				}
+
+				.process-section.is-animated .process-grid::after {
+					transform: scaleY(0);
+				}
+
+				.process-section.is-animated.is-visible .process-grid::after {
+					transform: scaleY(1);
+				}
+
+				.process-step {
+					padding-left: 62px;
+				}
+
+				.process-number {
+					position: absolute;
+					left: 0;
+					top: 20px;
+				}
+
+				.before-after-arrow {
+					transform: rotate(90deg);
+				}
+
+				.capability-pulses {
+					display: none;
+				}
+				}
+
+				@media (prefers-reduced-motion: reduce) {
+				.process-grid::after,
+				.process-step,
+				.process-number {
+					transition: none;
+				}
+
+				.process-step {
+					opacity: 1;
+					transform: none;
+				}
+
+				.process-grid::after {
+					transform: scaleX(1);
+				}
+
+					.workflow-map,
+					.workflow-pulse,
+					.capability-pulse {
+						animation: none;
+					}
+				}
 		</style>
 </head>
 
 <body>
 	<header>
+		<div class="workflow-map" aria-hidden="true">
+			<span class="workflow-pulse"></span>
+			<span class="workflow-pulse"></span>
+			<span class="workflow-pulse"></span>
+		</div>
 		<div class="hero-inner">
 			<div class="header-left">
 				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1000 1000" width="100">
@@ -404,36 +1000,68 @@
 			</div>
 			<div class="hero-content">
 				<h1 class="slogan">Workflow automation for creative teams</h1>
-				<p class="hero-subtitle">Custom tools, plugins, and pipeline automations for media production workflows.</p>
+				<p class="hero-subtitle">Custom automations tailored for your company.</p>
 				<a href="contact.html" class="contact-button">Schedule a free workflow review</a>
 			</div>
 		</div>
 	</header>
 
-	<section class="main-section">
+	<section class="main-section process-section">
 		<div class="section-inner">
 			<h2 class="section-title">How A Workflow Review Works</h2>
 			<div class="process-grid">
-				<div class="process-step">
+				<div class="process-step" tabindex="0">
 					<span class="process-number">1</span>
 					<h3>Review the workflow</h3>
 					<p>We map the recurring task, tools, inputs, outputs, and failure points.</p>
+					<span class="process-detail">Inputs, outputs, edge cases, team handoffs.</span>
 				</div>
-				<div class="process-step">
+				<div class="process-step" tabindex="0">
 					<span class="process-number">2</span>
 					<h3>Prototype the automation</h3>
 					<p>We build a focused version your team can test against real projects.</p>
+					<span class="process-detail">Small, testable tool against real project files.</span>
 				</div>
-				<div class="process-step">
+				<div class="process-step" tabindex="0">
 					<span class="process-number">3</span>
 					<h3>Integrate and support</h3>
 					<p>We refine the tool, document usage, and support the workflow as it evolves.</p>
+					<span class="process-detail">Documentation, rollout, support, iteration.</span>
 				</div>
 			</div>
 		</div>
 	</section>
 
 	<section class="main-section section-band">
+		<div class="section-inner">
+			<h2 class="section-title">Before And After Automation</h2>
+			<div class="before-after-grid">
+				<div class="before-after-card">
+					<h3>Before</h3>
+					<ul>
+						<li>Manual exports</li>
+						<li>Spreadsheet copy and paste</li>
+						<li>Repeated template edits</li>
+						<li>Naming mistakes</li>
+						<li>Inconsistent deliverables</li>
+					</ul>
+				</div>
+				<div class="before-after-arrow" aria-hidden="true">&rarr;</div>
+				<div class="before-after-card">
+					<h3>After</h3>
+					<ul>
+						<li>One-click batch processing</li>
+						<li>Connected data sources</li>
+						<li>Automated template updates</li>
+						<li>Consistent naming rules</li>
+						<li>Repeatable delivery output</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="main-section">
 		<div class="section-inner">
 			<h2 class="section-title">What We Automate</h2>
 			<p class="section-intro">Automate repetitive tasks, connect creative software with your internal systems, and give teams faster ways to move from brief to delivery.</p>
@@ -458,58 +1086,121 @@
 		</div>
 	</section>
 
-	<section class="main-section">
+	<section class="main-section section-band">
 		<div class="section-inner">
 			<h2 class="section-title">Common Workflows</h2>
 			<p class="section-intro">Start with the bottleneck your team already knows too well.</p>
 			<ul class="workflow-examples">
-				<li>Campaign versioning across markets, formats, and deliverables</li>
-				<li>Clip exports, delivery prep, burn-ins, and naming rules</li>
-				<li>Template text replacement for high-volume video production</li>
-				<li>Asset preparation for social, ecommerce, and publishing teams</li>
-				<li>Review and approval handoffs between producers and operators</li>
-				<li>Metadata, spreadsheet, folder, and file naming workflows</li>
+				<li tabindex="0">
+					<h3>Campaign Versioning</h3>
+					<p>Generate market, language, and format variants from one source workflow.</p>
+				</li>
+				<li tabindex="0">
+					<h3>Clip Exports</h3>
+					<p>Prepare delivery files with naming rules, burn-ins, effects, and folder targets.</p>
+				</li>
+				<li tabindex="0">
+					<h3>Template Text Replacement</h3>
+					<p>Update high-volume video campaigns from structured data instead of manual edits.</p>
+				</li>
+				<li tabindex="0">
+					<h3>Asset Preparation</h3>
+					<p>Resize, crop, name, overlay, and export assets for social, ecommerce, and publishing.</p>
+				</li>
+				<li tabindex="0">
+					<h3>Review Handoffs</h3>
+					<p>Move notes, files, approvals, and production states between teams more reliably.</p>
+				</li>
+				<li tabindex="0">
+					<h3>Metadata Workflows</h3>
+					<p>Connect spreadsheets, folders, filenames, tags, and project data across the pipeline.</p>
+				</li>
 			</ul>
 		</div>
 	</section>
 
-	<section class="main-section section-band centered-section">
+	<section class="main-section centered-section">
 		<div class="section-inner">
 			<h2 class="section-title">Creative App Capabilities</h2>
 			<p class="section-intro">Built around the tools your creative teams already use.</p>
-			<div class="custom-solutions-logos">
-				<div>
-					<img src="./images/premiere-pro.png" alt="Premiere Pro">
-					<span>Premiere Pro</span>
+			<div class="capability-layout">
+				<div class="capability-pulses" aria-hidden="true">
+					<span class="capability-pulse one"></span>
+					<span class="capability-pulse two"></span>
+					<span class="capability-pulse three"></span>
+					<span class="capability-pulse four"></span>
+					<span class="capability-pulse fan-one"></span>
+					<span class="capability-pulse fan-two"></span>
+					<span class="capability-pulse fan-three"></span>
 				</div>
-				<div>
-					<img src="./images/after-effects.png" alt="After Effects">
-					<span>After Effects</span>
-				</div>
-				<div>
-					<img src="./images/photoshop.png" alt="Photoshop">
-					<span>Photoshop</span>
-				</div>
-				<div>
-					<img src="./images/illustrator.svg" alt="Illustrator">
-					<span>Illustrator</span>
-				</div>
-				<div>
-					<img src="./images/davinci-resolve.png" alt="DaVinci Resolve">
-					<span>DaVinci Resolve</span>
-				</div>
-				<div>
-					<img src="./images/airtable.svg" alt="Airtable">
-					<span>Airtable</span>
+				<div class="custom-solutions-logos">
+					<div class="app-logo-card">
+						<img src="./images/premiere-pro.png" alt="Premiere Pro">
+						<span>Premiere Pro</span>
+					</div>
+					<div class="app-logo-card">
+						<img src="./images/after-effects.png" alt="After Effects">
+						<span>After Effects</span>
+					</div>
+					<div class="app-logo-card">
+						<img src="./images/photoshop.png" alt="Photoshop">
+						<span>Photoshop</span>
+					</div>
+					<div class="app-logo-card">
+						<img src="./images/illustrator.svg" alt="Illustrator">
+						<span>Illustrator</span>
+					</div>
+					<div class="app-logo-card">
+						<img src="./images/davinci-resolve.png" alt="DaVinci Resolve">
+						<span>DaVinci Resolve</span>
+					</div>
+					<div class="app-logo-card">
+						<img src="./images/airtable.svg" alt="Airtable">
+						<span>Airtable</span>
+					</div>
 				</div>
 			</div>
 		</div>
 	</section>
 
 	<section class="main-section section-band">
+		<div class="section-inner">
+			<h2 class="section-title">Systems We Connect</h2>
+			<p class="section-intro">Automation works best when it connects the places your team already works.</p>
+			<div class="systems-grid">
+				<div class="system-card">
+					<h3>Creative Apps</h3>
+					<p>Editors, templates, design tools, render workflows.</p>
+				</div>
+				<div class="system-card">
+					<h3>Spreadsheets</h3>
+					<p>Campaign data, version lists, copy, metadata, approvals.</p>
+				</div>
+				<div class="system-card">
+					<h3>Review Tools</h3>
+					<p>Notes, approvals, status changes, producer handoffs.</p>
+				</div>
+				<div class="system-card">
+					<h3>File Systems</h3>
+					<p>Folder structures, naming rules, delivery locations.</p>
+				</div>
+				<div class="system-card">
+					<h3>Databases</h3>
+					<p>Source records, asset metadata, campaign state.</p>
+				</div>
+				<div class="system-card">
+					<h3>Internal APIs</h3>
+					<p>Custom platforms, publishing systems, delivery services.</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="main-section">
 		<div class="section-inner final-cta">
 			<h2>Have a workflow your team keeps repeating?</h2>
 			<a href="contact.html" class="contact-button">Schedule a free workflow review</a>
+			<p class="cta-note">Useful for production teams, agencies, broadcasters, studios, and in-house creative departments.</p>
 		</div>
 	</section>
 
@@ -576,6 +1267,35 @@
 		</a>
 	</footer> -->
 
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			const processSection = document.querySelector('.process-section');
+
+			if (!processSection) {
+				return;
+			}
+
+			processSection.classList.add('is-animated');
+
+			if (!('IntersectionObserver' in window)) {
+				processSection.classList.add('is-visible');
+				return;
+			}
+
+			const observer = new IntersectionObserver(function (entries) {
+				entries.forEach(function (entry) {
+					if (entry.isIntersecting) {
+						processSection.classList.add('is-visible');
+						observer.disconnect();
+					}
+				});
+			}, {
+				threshold: 0.35
+			});
+
+			observer.observe(processSection);
+		});
+	</script>
 </body>
 
 </html>
