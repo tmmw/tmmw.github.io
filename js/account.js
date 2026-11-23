@@ -81,8 +81,36 @@
 					? `Trial ends on ${end}; your first payment is taken then.`
 					: `Renews on ${end}.`, "record-meta"]);
 		}
-		lines.push(["To change or cancel, use the link in your Stripe receipt email, or contact us.", "record-meta"]);
-		subscriptionDetails.append(makeRecord(`TMMW subscription · ${interval}`, lines));
+		const record = makeRecord(`TMMW subscription · ${interval}`, lines);
+		const manageButton = document.createElement("button");
+		manageButton.type = "button";
+		manageButton.textContent = subscription.status === "past_due" ? "Update payment method" : "Manage subscription";
+		manageButton.addEventListener("click", () => void openPortal(manageButton));
+		const actions = document.createElement("div");
+		actions.className = "account-actions record-actions";
+		actions.append(manageButton);
+		record.append(actions, makeParagraph("Change plan, update your card, download invoices, or cancel.", "record-meta"));
+		subscriptionDetails.append(record);
+	}
+
+	function makeParagraph(text, className) {
+		const paragraph = document.createElement("p");
+		paragraph.textContent = text;
+		paragraph.className = className;
+		return paragraph;
+	}
+
+	async function openPortal(button) {
+		button.disabled = true;
+		setStatus(checkoutStatus, "Opening Stripe billing portal…");
+		const { data, error } = await supabaseClient.functions.invoke("create-portal-session");
+		if (!error && typeof data?.url === "string" && data.url.startsWith("https://billing.stripe.com/")) {
+			window.location.assign(data.url);
+			return;
+		}
+		console.error("Billing portal could not open", error);
+		setStatus(checkoutStatus, "The billing portal is unavailable right now. Please try again shortly, or contact us.", "error");
+		button.disabled = false;
 	}
 
 	function renderPlans(prices, offerTrial) {
