@@ -47,13 +47,24 @@
 		.record p { margin: 5px 0; line-height: 1.5; }
 		.record-meta { color: #a8a8a8; font-size: 13px; }
 		.record-actions { margin: 14px 0 6px; }
+		.seat-list { display: grid; gap: 8px; margin: 14px 0; padding: 0; list-style: none; }
+		.seat-list li { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; padding: 10px 12px; border: 1px solid #333a42; border-radius: 7px; }
+		.seat-list li > span:first-child { flex: 1 1 200px; overflow-wrap: anywhere; color: var(--account-heading); }
+		.button-quiet { min-height: 34px; padding: 6px 12px; background: transparent; border: 1px solid #515b66; color: var(--account-text); }
+		.button-quiet:hover:not(:disabled) { background: #262b31; }
+		.seat-form { display: grid; gap: 8px; margin-top: 14px; }
+		.seat-form input { flex: 1 1 220px; width: auto; }
+		.seat-count { display: inline-flex; align-items: center; gap: 10px; }
+		.seat-count input { width: 84px; }
+		.plan-hint { flex-basis: 100%; margin: 0; }
+		.status-inline.error { color: #ffb2b2; }
 		.plan-options { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 4px; }
 		footer { padding: 24px; text-align: center; color: #929292; }
 		@media (max-width: 600px) { .account-header { padding: 18px; } .account-main { margin-top: 36px; } .panel { padding: 20px; } }
 	</style>
 	<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 	<script defer src="../js/supabase-config.js?v=2"></script>
-	<script defer src="../js/account.js?v=6"></script>
+	<script defer src="../js/account.js?v=7"></script>
 </head>
 <body>
 	<header class="account-header">
