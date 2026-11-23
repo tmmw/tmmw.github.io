@@ -96,6 +96,8 @@
 				.order("created_at", { ascending: false }),
 			supabaseClient.from("orders")
 				.select("id,status,currency,subtotal_amount,tax_amount,total_amount,created_at,paid_at,order_items(quantity,unit_amount,currency,products(name,sku))")
+				// Unpaid, abandoned and failed checkouts aren't purchases; don't show them to customers.
+				.not("status", "in", "(pending,failed,expired)")
 				.order("created_at", { ascending: false })
 		]);
 		// Sign-in fires several auth events; only the newest load may render.
