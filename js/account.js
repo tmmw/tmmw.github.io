@@ -294,8 +294,8 @@
 				button.textContent = offerTrial ? `${label} · 14 days free, then ${amount}` : `${label} · ${amount}`;
 			}
 			seatHint.textContent = seats > 1
-				? `${seats} seats: one for you, ${seats - 1} to share with your team by email. Prices before tax.`
-				: "Buying for a studio? Choose more seats and share them with your team. Prices before tax.";
+				? `${seats} seats: one for you, ${seats - 1} to share with your team by email. Prices include VAT.`
+				: "Buying for a studio? Choose more seats and share them with your team. Prices include VAT.";
 		}
 		seatInput.addEventListener("input", updateLabels);
 		updateLabels();
