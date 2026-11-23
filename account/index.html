@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Manage your TMMW plugin purchases and licenses.">
+	<title>Your TMMW Account</title>
+	<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+	<link rel="stylesheet" href="../css/style.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+	<style>
+		:root {
+			--account-bg: #141414;
+			--account-panel: #1e1e1e;
+			--account-border: #46505a;
+			--account-text: #c8c8c8;
+			--account-heading: #ececec;
+			--account-blue: #2d7ff9;
+		}
+
+		body { min-height: 100vh; display: block; background: var(--account-bg); color: var(--account-text); }
+		.account-header { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px max(24px, calc((100vw - 1060px) / 2)); border-bottom: 1px solid #292929; }
+		.account-brand { color: var(--account-heading); font-weight: 500; letter-spacing: .04em; }
+		.account-main { width: min(900px, calc(100% - 36px)); margin: 56px auto 90px; }
+		h1, h2, h3 { color: var(--account-heading); }
+		h1 { margin: 0 0 12px; font-size: clamp(28px, 4vw, 38px); font-weight: 400; }
+		.lead { margin: 0 0 28px; line-height: 1.7; }
+		.panel { padding: 26px; margin: 18px 0; border: 1px solid var(--account-border); border-radius: 12px; background: var(--account-panel); }
+		.panel h2 { margin: 0 0 16px; font-size: 20px; font-weight: 500; }
+		.login-form { display: grid; gap: 12px; max-width: 460px; }
+		label { color: var(--account-heading); font-size: 14px; }
+		input { box-sizing: border-box; width: 100%; padding: 12px 14px; border: 1px solid #515b66; border-radius: 7px; background: #141414; color: white; font: inherit; }
+		input:focus-visible, button:focus-visible, a:focus-visible { outline: 3px solid #8bb8ff; outline-offset: 3px; }
+		button, .button-link { width: fit-content; min-height: 42px; padding: 10px 16px; border: 0; border-radius: 7px; background: var(--account-blue); color: white; font: inherit; font-weight: 500; cursor: pointer; }
+		button:disabled { cursor: not-allowed; opacity: .55; }
+		button:hover:not(:disabled), .button-link:hover { background: #5a9cff; }
+		.button-link { display: inline-flex; align-items: center; }
+		.account-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+		.status { min-height: 24px; margin: 12px 0 0; color: #a8caff; }
+		.status[data-kind="error"] { color: #ffb2b2; }
+		.hidden { display: none !important; }
+		.record-list { display: grid; gap: 12px; }
+		.record { padding: 16px; border: 1px solid #3d454e; border-radius: 9px; background: #191919; }
+		.record h3 { margin: 0 0 8px; font-size: 16px; font-weight: 500; }
+		.record p { margin: 5px 0; line-height: 1.5; }
+		.record-meta { color: #a8a8a8; font-size: 13px; }
+		footer { padding: 24px; text-align: center; color: #929292; }
+		@media (max-width: 600px) { .account-header { padding: 18px; } .account-main { margin-top: 36px; } .panel { padding: 20px; } }
+	</style>
+	<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+	<script defer src="../js/supabase-config.js"></script>
+	<script defer src="../js/account.js"></script>
+</head>
+<body>
+	<header class="account-header">
+		<a class="account-brand" href="../index.html">THE MACHINE MUST WORK</a>
+		<a href="../index.html">Back to website</a>
+	</header>
+	<main class="account-main">
+		<h1>Your account</h1>
+		<p class="lead">Sign in to view your plugin purchases, license status, and activations.</p>
+
+		<section class="panel" id="login-panel" aria-labelledby="login-title">
+			<h2 id="login-title">Sign in with email</h2>
+			<form class="login-form" id="login-form">
+				<label for="email">Email address</label>
+				<input id="email" name="email" type="email" autocomplete="email" required>
+				<button id="login-button" type="submit">Send sign-in link</button>
+			</form>
+			<p class="status" id="login-status" role="status" aria-live="polite"></p>
+		</section>
+
+		<section class="hidden" id="dashboard" aria-labelledby="dashboard-title">
+			<div class="panel">
+				<h2 id="dashboard-title">Purchases and licenses</h2>
+				<p id="signed-in-email"></p>
+				<div class="account-actions"><button id="sign-out-button" type="button">Sign out</button></div>
+				<p class="status" id="dashboard-status" role="status" aria-live="polite"></p>
+			</div>
+			<section class="panel hidden" id="checkout-panel" aria-labelledby="checkout-title">
+				<h2 id="checkout-title">Complete your purchase</h2>
+				<p id="checkout-product"></p>
+				<div class="account-actions"><button id="checkout-button" type="button">Continue to secure checkout</button></div>
+				<p class="status" id="checkout-status" role="status" aria-live="polite"></p>
+			</section>
+			<section class="panel" aria-labelledby="licenses-title">
+				<h2 id="licenses-title">Licenses and activations</h2>
+				<div class="record-list" id="licenses-list"></div>
+			</section>
+			<section class="panel" aria-labelledby="orders-title">
+				<h2 id="orders-title">Orders</h2>
+				<div class="record-list" id="orders-list"></div>
+			</section>
+		</section>
+	</main>
+	<footer>Need help? <a href="../contact.html">Contact TMMW</a></footer>
+</body>
+</html>

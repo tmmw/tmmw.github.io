@@ -11,6 +11,7 @@
 	<meta property="og:description" content="Custom tools, plugins, and pipeline automations for creative teams working across media production workflows.">
 	<meta property="og:type" content="website">
 	<meta property="og:image" content="./images/TMMW_Art_ClipsExporter-AES-SplashImage.jpg">
+	<link rel="icon" type="image/svg+xml" href="./favicon.svg">
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,6 +40,27 @@
 			.contact-button:hover {
 				background-color: #5a9cff;
 				transform: translateY(-2px);
+			}
+
+			.secondary-button {
+				color: var(--heading);
+				padding: 10px 20px;
+				border: 1px solid rgba(236, 236, 236, 0.45);
+				border-radius: 8px;
+				font-weight: 500;
+				display: inline-block;
+				transition: background-color 0.2s ease, border-color 0.2s ease;
+			}
+
+			.secondary-button:hover {
+				background-color: rgba(255, 255, 255, 0.08);
+				border-color: var(--heading);
+			}
+
+			.secondary-button:focus-visible,
+			.contact-button:focus-visible {
+				outline: 3px solid #8bb8ff;
+				outline-offset: 3px;
 			}
 
 			header {
@@ -397,51 +419,18 @@
 				box-shadow: 0 0 20px rgba(45, 127, 249, 0.35);
 			}
 
-			#productsCont {
-				display: grid;
-				grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-				gap: 30px;
+			.products-section #productsCont {
 				max-width: 1200px;
-			margin: 0 auto;
-		}
+				margin: 0 auto;
+			}
 
-		.productContWrapper {
-			background-color: #282828;
-			border-radius: 10px;
-			padding: 20px;
-			transition: transform 0.3s ease;
-		}
+			.products-section .productContWrapper {
+				transition: transform 0.25s ease;
+			}
 
-		.productContWrapper:hover {
-			transform: translateY(-5px);
-		}
-
-		.productSplash {
-			margin-bottom: 15px;
-		}
-
-		.productSplashImage {
-			width: 100%;
-			height: auto;
-			border-radius: 5px;
-		}
-
-		.productTitle {
-			color: #ffffff;
-			font-size: 18px;
-			margin-bottom: 10px;
-		}
-
-		.productSlogan {
-			color: #c8c8c8;
-			font-size: 14px;
-			margin-bottom: 15px;
-		}
-
-		.productType {
-			color: #888;
-			font-size: 12px;
-		}
+			.products-section .productContWrapper:hover {
+				transform: translateY(-4px);
+			}
 
 			.workflow-examples {
 				display: grid;
@@ -1002,6 +991,7 @@
 				<h1 class="slogan">Workflow automation for creative teams</h1>
 				<p class="hero-subtitle">Custom automations tailored for your company.</p>
 				<a href="contact.html" class="contact-button">Schedule a free workflow review</a>
+				<a href="#plugins" class="secondary-button">Browse our plugins</a>
 			</div>
 		</div>
 	</header>
@@ -1204,59 +1194,67 @@
 		</div>
 	</section>
 
-	<section class="main-section is-hidden" aria-hidden="true">
-		<h2 class="section-title">Our Products</h2>
-		<div id="productsCont">
-			<div class="productContWrapper">
-				<a class="productCont" href="https://aescripts.com/clips-exporter/">
-					<div class="productSplash">
-						<img class="productSplashImage" src="./images/TMMW_Art_ClipsExporter-AES-SplashImage.jpg" alt="Clips Exporter for Premiere Pro">
+	<section class="main-section section-band products-section" id="plugins" aria-labelledby="plugins-title">
+		<div class="section-inner">
+			<h2 class="section-title" id="plugins-title">Plugins for your creative workflow</h2>
+			<p class="section-intro">Purpose-built extensions and plugins for Adobe Premiere Pro and Photoshop.</p>
+			<p class="section-intro">First-party checkout and license management are in development. You can currently purchase through each plugin’s existing marketplace.</p>
+			<div id="productsCont">
+				<article class="productContWrapper">
+					<div class="productCont">
+						<div class="productSplash">
+							<img class="productSplashImage" src="./images/TMMW_Art_ClipsExporter-AES-SplashImage.jpg" alt="Clips Exporter for Premiere Pro">
+						</div>
+						<div class="productBody">
+							<p class="productPlatform">Premiere Pro · Extension</p>
+							<h3 class="productTitle">Clips Exporter</h3>
+							<p class="productSlogan">Batch export individual clips from your Premiere Pro sequences in a single click, including applied effects.</p>
+							<a class="productBuyButton" href="https://aescripts.com/clips-exporter/" target="_blank" rel="noopener noreferrer">Buy on aescripts</a>
+						</div>
 					</div>
-					<div class="productTitle">Clips Exporter</div>
-					<div class="productSlogan">
-						Batch export individual clips from your Premiere Pro sequences in a single click. Including applied effects!
-					</div>
-					<div class="productType">Extension</div>
-				</a>
-			</div>
+				</article>
 
-			<div class="productContWrapper">
-				<a class="productCont" href="https://aescripts.com/text-replacer-for-premiere-pro/">
-					<div class="productSplash">
-						<img class="productSplashImage" src="./images/TMMW_Art_TextReplacerForPR-AES-SplashImage.jpg" alt="Text Replacer for Premiere Pro">
+				<article class="productContWrapper">
+					<div class="productCont">
+						<div class="productSplash">
+							<img class="productSplashImage" src="./images/TMMW_Art_TextReplacerForPR-AES-SplashImage.jpg" alt="Text Replacer for Premiere Pro">
+						</div>
+						<div class="productBody">
+							<p class="productPlatform">Premiere Pro · Extension</p>
+							<h3 class="productTitle">Text Replacer</h3>
+							<p class="productSlogan">Import and export text in Premiere Pro from After Effects templates (.mogrt). Works with templates created in After Effects.</p>
+							<a class="productBuyButton" href="https://aescripts.com/text-replacer-for-premiere-pro/" target="_blank" rel="noopener noreferrer">Buy on aescripts</a>
+						</div>
 					</div>
-					<div class="productTitle">Text Replacer</div>
-					<div class="productSlogan">
-						Import and export text in Premiere Pro from your After Effects templates (.mogrt). ⚠ Works with templates (.mogrt) created in After Effects. Not with templates (.mogrt) created in Premiere Pro ⚠
-					</div>
-					<div class="productType">Extension</div>
-				</a>
-			</div>
+				</article>
 
-			<div class="productContWrapper">
-				<a class="productCont" href="https://aescripts.com/selector-for-premiere-pro/">
-					<div class="productSplash">
-						<img class="productSplashImage" src="./images/TMMW_Art_SelectorForPR-AES-SplashImage.jpg" alt="Selector for Premiere Pro">
+				<article class="productContWrapper">
+					<div class="productCont">
+						<div class="productSplash">
+							<img class="productSplashImage" src="./images/TMMW_Art_SelectorForPR-AES-SplashImage.jpg" alt="Selector for Premiere Pro">
+						</div>
+						<div class="productBody">
+							<p class="productPlatform">Premiere Pro · Extension</p>
+							<h3 class="productTitle">Selector</h3>
+							<p class="productSlogan">Select items and clips, save selection presets, and choose from more than 45 filters.</p>
+							<a class="productBuyButton" href="https://aescripts.com/selector-for-premiere-pro/" target="_blank" rel="noopener noreferrer">Buy on aescripts</a>
+						</div>
 					</div>
-					<div class="productTitle">Selector</div>
-					<div class="productSlogan">
-						Easily select items and clips in your Premiere Pro projects and sequences. Save selection presets. Use over 45 selection filters. Load selection presets in a single click!
-					</div>
-					<div class="productType">Extension</div>
-				</a>
-			</div>
+				</article>
 
-			<div class="productContWrapper">
-				<a class="productCont" href="https://adobe.com/go/cc_plugins_discover_plugin?pluginId=abc6dfb8&workflow=share">
-					<div class="productSplash">
-						<img class="productSplashImage" src="./images/TMMW_Art_ThumbsUpForPS-AES-SplashImage.jpg" alt="Thumbs Up for Photoshop">
+				<article class="productContWrapper">
+					<div class="productCont">
+						<div class="productSplash">
+							<img class="productSplashImage" src="./images/TMMW_Art_ThumbsUpForPS-AES-SplashImage.jpg" alt="Thumbs Up for Photoshop">
+						</div>
+						<div class="productBody">
+							<p class="productPlatform">Photoshop · Plugin</p>
+							<h3 class="productTitle">Thumbs Up for Photoshop</h3>
+							<p class="productSlogan">Prepare images for distribution in a single click. Crop, run actions, add overlays, and save presets.</p>
+							<a class="productBuyButton" href="https://adobe.com/go/cc_plugins_discover_plugin?pluginId=abc6dfb8&amp;workflow=share" target="_blank" rel="noopener noreferrer">View on Adobe Exchange</a>
+						</div>
 					</div>
-					<div class="productTitle">Thumbs Up for Photoshop</div>
-					<div class="productSlogan">
-						Easily prepare images for distribution in a single click. Crop, play actions, add overlays and save custom presets.
-					</div>
-					<div class="productType">Plugin</div>
-				</a>
+				</article>
 			</div>
 		</div>
 	</section>

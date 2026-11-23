@@ -1,0 +1,6 @@
+.DS_Store
+supabase/
+PROJECT_MEMORY_EXPORT.md
+PRODUCT_SALES_LICENSING_PLAN.md
+js/test.js
+.env*

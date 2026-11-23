@@ -42,54 +42,96 @@ header {
 }
 
 #productsCont {
-  padding: calc(5 * 10px) calc(4 * 10px);
+  padding: 12px 0 0;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  row-gap: 10px;
-  column-gap: 10px;
-  grid-auto-flow: row;
-  width: min(1200px, 100%);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+  gap: 18px;
+  width: 100%;
 }
 
 .productContWrapper {
-  display: flex;
-  justify-content: center;
+  min-width: 0;
 }
 
 .productCont {
-  position: relative;
-  display: block;
+  display: flex;
+  flex-direction: column;
   width: 100%;
+  height: 100%;
   background-color: #1e1e1e;
   border: 1px solid slategrey;
   border-radius: 10px;
-  cursor: pointer;
+  overflow: hidden;
 }
 
 .productTitle {
-  text-align: center;
-  padding: 10px;
-  font-size: 25px;
-  letter-spacing: 0.1em;
-  font-weight: 100;
+  margin: 0;
+  color: #ececec;
+  font-size: 20px;
+  letter-spacing: 0.02em;
+  font-weight: 500;
 }
 
 .productSlogan {
-  padding: calc(2 * 10px);
-  text-align: center;
-  letter-spacing: 0.05em;
+  margin: 0;
   font-weight: 400;
   font-size: 15px;
-  padding-bottom: 40px;
+  line-height: 1.65;
+  color: #c8c8c8;
 }
 
 .productSplash {
-  position: relative;
+  background-color: #141414;
 }
 
 .productSplashImage {
+  display: block;
   width: 100%;
-  border-radius: 10px 10px 0 0;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+}
+
+.productBody {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 20px;
+}
+
+.productPlatform {
+  margin: 0;
+  color: #93baff;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.productBuyButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  margin-top: auto;
+  padding: 10px 16px;
+  border-radius: 7px;
+  background-color: #2d7ff9;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.productBuyButton:hover {
+  background-color: #5a9cff;
+  transform: translateY(-1px);
+}
+
+.productBuyButton:focus-visible {
+  outline: 3px solid #8bb8ff;
+  outline-offset: 3px;
 }
 
 #socialMediaCont {
@@ -107,18 +149,6 @@ header {
 
 @media only screen and (max-width: 500px) {
   #productsCont {
-    padding: calc(1 * 10px) calc(1 * 10px);
+    grid-template-columns: 1fr;
   }
-}
-
-.productType {
-  position: absolute;
-  padding: 8px 16px;
-  background-color: white;
-  color: black;
-  bottom: 5px;
-  right: 5px;
-  margin: auto;
-  border-radius: 8px;
-  font-size: 10px;
 }
