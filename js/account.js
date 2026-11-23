@@ -33,6 +33,12 @@
 		already_added: "That email already has a seat.",
 		no_subscription: "Your subscription isn’t active."
 	};
+	const inviteErrors = {
+		too_soon: "An invite was sent less than 10 minutes ago. Please wait before sending another.",
+		seat_inactive: "This seat is over your seat limit, so no invite was sent.",
+		seat_not_found: "That seat no longer exists. Refresh the page.",
+		email_rate_limited: "Too many emails were sent just now. Please try again in a little while."
+	};
 	const checkoutErrors = {
 		already_subscribed: "You already have an active subscription.",
 		plan_unavailable: "This plan isn’t available yet.",
@@ -124,14 +130,24 @@
 			email.textContent = seat.email;
 			const state = document.createElement("span");
 			state.className = "record-meta";
-			state.textContent = seat.has_access ? "Has access" : "No access — over seat limit";
+			state.textContent = !seat.has_access
+				? "No access — over seat limit"
+				: seat.invited_at ? `Has access · invited ${formatDate(seat.invited_at)}` : "Has access · not invited yet";
+			const invite = document.createElement("button");
+			invite.type = "button";
+			invite.className = "button-quiet";
+			invite.textContent = seat.invited_at ? "Resend invite" : "Send invite";
+			invite.setAttribute("aria-label", `${invite.textContent} to ${seat.email}`);
+			invite.addEventListener("click", () => void sendInvite(seat.id, seat.email, invite));
 			const remove = document.createElement("button");
 			remove.type = "button";
 			remove.className = "button-quiet";
 			remove.textContent = "Remove";
 			remove.setAttribute("aria-label", `Remove ${seat.email}`);
 			remove.addEventListener("click", () => void removeSeat(seat, remove));
-			item.append(email, state, remove);
+			item.append(email, state);
+			if (seat.has_access) item.append(invite);
+			item.append(remove);
 			list.append(item);
 		}
 		if (seats.length) record.append(list);
@@ -150,7 +166,7 @@
 			input.placeholder = "name@studio.com";
 			const submit = document.createElement("button");
 			submit.type = "submit";
-			submit.textContent = "Add seat";
+			submit.textContent = "Add and send invite";
 			const row = document.createElement("div");
 			row.className = "account-actions";
 			row.append(input, submit);
@@ -167,14 +183,30 @@
 	async function addSeat(email, button) {
 		button.disabled = true;
 		setStatus(checkoutStatus, "Adding seat…");
-		const { error } = await supabaseClient.rpc("add_subscription_seat", { p_email: email });
+		const { data: seatId, error } = await supabaseClient.rpc("add_subscription_seat", { p_email: email });
 		if (error) {
 			console.error("Could not add seat", error);
 			setStatus(checkoutStatus, seatErrors[error.message] ?? "We couldn’t add that seat. Please try again.", "error");
 			button.disabled = false;
 			return;
 		}
-		setStatus(checkoutStatus, `Seat added. Ask ${email.trim()} to sign in at tmmw.app/account with that email.`);
+		await sendInvite(seatId, email.trim().toLowerCase(), null, "Seat added. ");
+	}
+
+	async function sendInvite(seatId, email, button, prefix = "") {
+		if (button) button.disabled = true;
+		setStatus(checkoutStatus, `${prefix}Sending invite to ${email}…`);
+		const { data, error } = await supabaseClient.functions.invoke("send-seat-invite", { body: { seat_id: seatId } });
+		if (error) {
+			let code = "";
+			try { code = (await error.context?.json())?.error ?? ""; } catch { /* non-JSON error body */ }
+			console.error("Could not send invite", code || error);
+			setStatus(checkoutStatus, `${prefix}${inviteErrors[code] ?? `We couldn’t email ${email}. Ask them to sign in at tmmw.app/account with that email, or try again later.`}`, "error");
+		} else {
+			setStatus(checkoutStatus, data?.sent === "sign_in_link"
+				? `${prefix}${email} already has a TMMW account, so we emailed them a sign-in link.`
+				: `${prefix}Invite emailed to ${email}.`);
+		}
 		await reloadDashboard();
 	}
 
