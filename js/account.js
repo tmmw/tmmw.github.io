@@ -6,43 +6,31 @@
 	const loginButton = document.getElementById("login-button");
 	const loginStatus = document.getElementById("login-status");
 	const dashboardStatus = document.getElementById("dashboard-status");
-	const licensesList = document.getElementById("licenses-list");
-	const ordersList = document.getElementById("orders-list");
-	const checkoutPanel = document.getElementById("checkout-panel");
-	const checkoutButton = document.getElementById("checkout-button");
+	const subscriptionDetails = document.getElementById("subscription-details");
+	const planOptions = document.getElementById("plan-options");
 	const checkoutStatus = document.getElementById("checkout-status");
 	const pageParams = new URLSearchParams(window.location.search);
-	const requestedSku = /^[a-z0-9][a-z0-9_-]{1,63}$/i.test(pageParams.get("buy") ?? "") ? pageParams.get("buy") : "";
 	let supabaseClient;
 	let latestLoadId = 0;
 
+	// Matches has_active_subscription() on the server: paying, trialing, or past due while Stripe retries.
+	const ACCESS_STATUSES = ["trialing", "active", "past_due"];
+	const STATUS_TEXT = {
+		trialing: "Free trial",
+		active: "Active",
+		past_due: "Payment issue — Stripe is retrying your card; access continues for now.",
+		canceled: "Canceled",
+		unpaid: "Unpaid — access paused",
+		incomplete: "Waiting for first payment",
+		incomplete_expired: "Checkout not completed",
+		paused: "Paused"
+	};
 	const checkoutErrors = {
-		product_unavailable: "This product isn’t available for direct purchase yet.",
-		invalid_product: "This product link isn’t valid.",
-		unauthorized: "Please sign in again before checking out.",
+		already_subscribed: "You already have an active subscription.",
+		plan_unavailable: "This plan isn’t available yet.",
+		unauthorized: "Please sign in again before subscribing.",
 		origin_not_allowed: "Checkout can only be started from the TMMW website."
 	};
-
-	function showCheckout() {
-		if (!requestedSku) return;
-		checkoutPanel.classList.remove("hidden");
-		document.getElementById("checkout-product").textContent = `Product: ${requestedSku}`;
-	}
-
-	async function startCheckout() {
-		checkoutButton.disabled = true;
-		setStatus(checkoutStatus, "Opening secure checkout…");
-		const { data, error } = await supabaseClient.functions.invoke("create-checkout", { body: { sku: requestedSku } });
-		if (!error && typeof data?.url === "string" && data.url.startsWith("https://checkout.stripe.com/")) {
-			window.location.assign(data.url);
-			return;
-		}
-		let code = "";
-		try { code = (await error?.context?.json())?.error ?? ""; } catch { /* non-JSON error body */ }
-		console.error("Checkout could not start", code || error);
-		setStatus(checkoutStatus, checkoutErrors[code] ?? "Checkout is unavailable right now. Please try again shortly.", "error");
-		checkoutButton.disabled = false;
-	}
 
 	function setStatus(element, message, kind = "info") {
 		element.textContent = message;
@@ -64,16 +52,16 @@
 		return article;
 	}
 
-	function relation(value) {
-		return Array.isArray(value) ? value[0] : value;
-	}
-
 	function formatMinor(amount, currency) {
-		const code = (currency || "USD").toUpperCase();
+		const code = (currency || "EUR").toUpperCase();
 		const fractionDigits = new Intl.NumberFormat("en", { style: "currency", currency: code })
 			.resolvedOptions().maximumFractionDigits;
 		return new Intl.NumberFormat(undefined, { style: "currency", currency: code })
 			.format((amount ?? 0) / (10 ** fractionDigits));
+	}
+
+	function formatDate(value) {
+		return value ? new Date(value).toLocaleDateString(undefined, { dateStyle: "long" }) : "";
 	}
 
 	function showSignedOut(message = "") {
@@ -82,74 +70,97 @@
 		if (message) setStatus(loginStatus, message);
 	}
 
+	function renderSubscription(subscription) {
+		const interval = subscription.billing_interval === "year" ? "Yearly" : "Monthly";
+		const lines = [[STATUS_TEXT[subscription.status] ?? `Status: ${subscription.status}`]];
+		if (ACCESS_STATUSES.includes(subscription.status) && subscription.current_period_end) {
+			const end = formatDate(subscription.current_period_end);
+			lines.push([subscription.cancel_at_period_end
+				? `Ends on ${end} — it won’t renew.`
+				: subscription.status === "trialing"
+					? `Trial ends on ${end}; your first payment is taken then.`
+					: `Renews on ${end}.`, "record-meta"]);
+		}
+		lines.push(["To change or cancel, use the link in your Stripe receipt email, or contact us.", "record-meta"]);
+		subscriptionDetails.append(makeRecord(`TMMW subscription · ${interval}`, lines));
+	}
+
+	function renderPlans(prices, offerTrial) {
+		planOptions.replaceChildren();
+		const ordered = [...prices].sort((a, b) => (a.billing_interval === "year") - (b.billing_interval === "year"));
+		for (const price of ordered) {
+			const button = document.createElement("button");
+			button.type = "button";
+			const amount = price.billing_interval === "year"
+				? `${formatMinor(price.unit_amount, price.currency)}/year`
+				: `${formatMinor(price.unit_amount, price.currency)}/month`;
+			const label = price.billing_interval === "year" ? "Yearly" : "Monthly";
+			button.textContent = offerTrial ? `${label} · 14 days free, then ${amount}` : `${label} · ${amount}`;
+			button.addEventListener("click", () => void startCheckout(price.billing_interval));
+			planOptions.append(button);
+		}
+		planOptions.classList.toggle("hidden", !ordered.length);
+		if (!ordered.length) setStatus(checkoutStatus, "Subscriptions aren’t open yet.");
+	}
+
+	async function startCheckout(interval) {
+		for (const button of planOptions.querySelectorAll("button")) button.disabled = true;
+		setStatus(checkoutStatus, "Opening secure checkout…");
+		const { data, error } = await supabaseClient.functions.invoke("create-checkout", { body: { interval } });
+		if (!error && typeof data?.url === "string" && data.url.startsWith("https://checkout.stripe.com/")) {
+			window.location.assign(data.url);
+			return;
+		}
+		let code = "";
+		try { code = (await error?.context?.json())?.error ?? ""; } catch { /* non-JSON error body */ }
+		console.error("Checkout could not start", code || error);
+		setStatus(checkoutStatus, checkoutErrors[code] ?? "Checkout is unavailable right now. Please try again shortly.", "error");
+		for (const button of planOptions.querySelectorAll("button")) button.disabled = false;
+	}
+
 	async function loadDashboard(user) {
 		loginPanel.classList.add("hidden");
 		dashboard.classList.remove("hidden");
 		document.getElementById("signed-in-email").textContent = user.email ?? "Signed in";
-		showCheckout();
 		setStatus(dashboardStatus, "Loading your account…");
 		const loadId = ++latestLoadId;
 
-		const [licenseResult, orderResult] = await Promise.all([
-			supabaseClient.from("licenses")
-				.select("id,status,activation_limit,issued_at,expires_at,products(name,sku),license_activations(id,device_label,status,activated_at,last_validated_at)")
+		const [subscriptionResult, priceResult] = await Promise.all([
+			supabaseClient.from("subscriptions")
+				.select("status,billing_interval,current_period_end,cancel_at_period_end,created_at")
 				.order("created_at", { ascending: false }),
-			supabaseClient.from("orders")
-				.select("id,status,currency,subtotal_amount,tax_amount,total_amount,created_at,paid_at,order_items(quantity,unit_amount,currency,products(name,sku))")
-				// Unpaid, abandoned and failed checkouts aren't purchases; don't show them to customers.
-				.not("status", "in", "(pending,failed,expired)")
-				.order("created_at", { ascending: false })
+			supabaseClient.from("product_prices")
+				.select("billing_interval,unit_amount,currency")
+				.not("billing_interval", "is", null)
 		]);
 		// Sign-in fires several auth events; only the newest load may render.
 		if (loadId !== latestLoadId) return;
-		licensesList.replaceChildren();
-		ordersList.replaceChildren();
+		subscriptionDetails.replaceChildren();
 
-		if (licenseResult.error || orderResult.error) {
-			console.error("Could not load account records", licenseResult.error ?? orderResult.error);
+		if (subscriptionResult.error || priceResult.error) {
+			console.error("Could not load account records", subscriptionResult.error ?? priceResult.error);
 			setStatus(dashboardStatus, "We couldn’t load your account. Please refresh and try again.", "error");
 			return;
 		}
 
-		for (const license of licenseResult.data ?? []) {
-			const product = relation(license.products);
-			const activations = license.license_activations ?? [];
-			const label = product?.name ?? "Plugin license";
-			const activationSummary = activations.length
-				? `${activations.filter((item) => item.status === "active").length} active of ${license.activation_limit} activations`
-				: `No activations yet · limit ${license.activation_limit}`;
-			const statusText = license.status === "pending"
-				? "Payment received; license issuance is being completed."
-				: `License status: ${license.status}`;
-			licensesList.append(makeRecord(label, [
-				[statusText],
-				[activationSummary, "record-meta"],
-				["License keys and device controls will appear when licensing is connected.", "record-meta"]
-			]));
-		}
-		if (!licenseResult.data?.length) {
-			licensesList.append(makeRecord("No licenses yet", [["Licenses from completed purchases will appear here."]]));
+		const subscriptions = subscriptionResult.data ?? [];
+		const current = subscriptions.find((item) => ACCESS_STATUSES.includes(item.status));
+		if (current) {
+			renderSubscription(current);
+			planOptions.classList.add("hidden");
+			setStatus(checkoutStatus, "");
+		} else {
+			const last = subscriptions.find((item) => item.status !== "incomplete_expired");
+			subscriptionDetails.append(last
+				? makeRecord("No active subscription", [["Your previous subscription has ended. Subscribe again to keep using TMMW plugins."]])
+				: makeRecord("No subscription yet", [["One subscription unlocks every TMMW plugin. New subscribers get a 14-day free trial."]]));
+			// Mirrors create-checkout: only accounts that never subscribed get the trial.
+			renderPlans(priceResult.data ?? [], !subscriptions.some((item) => item.status !== "incomplete_expired"));
 		}
 
-		for (const order of orderResult.data ?? []) {
-			const lines = (order.order_items ?? []).map((item) => {
-				const product = relation(item.products);
-				const name = product?.name ?? "Plugin";
-			return `${name} · ${item.quantity} × ${formatMinor(item.unit_amount, item.currency)}`;
-			});
-			const total = order.total_amount === null
-				? "Total pending"
-				: `Total ${formatMinor(order.total_amount, order.currency)}`;
-			ordersList.append(makeRecord(`Order · ${new Date(order.created_at).toLocaleDateString()}`, [
-				[lines.join("; ") || "Order details pending"],
-				[`Status: ${order.status} · ${total}`, "record-meta"]
-			]));
-		}
-		if (!orderResult.data?.length) {
-			ordersList.append(makeRecord("No orders yet", [["Your purchases will appear here."]]));
-		}
-		setStatus(dashboardStatus, pageParams.get("checkout") === "complete"
-			? "Thanks! Your payment is being confirmed — refresh in a moment if your order isn’t marked paid yet."
+		const justSubscribed = pageParams.get("checkout") === "complete";
+		setStatus(dashboardStatus, justSubscribed && !current
+			? "Thanks! Your payment is being confirmed — refresh in a moment if your subscription isn’t shown yet."
 			: "Account details are up to date.");
 	}
 
@@ -169,7 +180,7 @@
 		const email = new FormData(loginForm).get("email").toString().trim();
 		const { error } = await supabaseClient.auth.signInWithOtp({
 			email,
-			options: { emailRedirectTo: new URL(requestedSku ? `/account/?buy=${encodeURIComponent(requestedSku)}` : "/account/", window.location.origin).toString() }
+			options: { emailRedirectTo: new URL("/account/", window.location.origin).toString() }
 		});
 		loginButton.disabled = false;
 		if (error) {
@@ -179,8 +190,6 @@
 		}
 		setStatus(loginStatus, "Check your email for a secure sign-in link.");
 	});
-
-	checkoutButton.addEventListener("click", () => void startCheckout());
 
 	document.getElementById("sign-out-button").addEventListener("click", async () => {
 		const { error } = await supabaseClient.auth.signOut();

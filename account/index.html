@@ -46,12 +46,13 @@
 		.record h3 { margin: 0 0 8px; font-size: 16px; font-weight: 500; }
 		.record p { margin: 5px 0; line-height: 1.5; }
 		.record-meta { color: #a8a8a8; font-size: 13px; }
+		.plan-options { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 4px; }
 		footer { padding: 24px; text-align: center; color: #929292; }
 		@media (max-width: 600px) { .account-header { padding: 18px; } .account-main { margin-top: 36px; } .panel { padding: 20px; } }
 	</style>
 	<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 	<script defer src="../js/supabase-config.js?v=2"></script>
-	<script defer src="../js/account.js?v=3"></script>
+	<script defer src="../js/account.js?v=5"></script>
 </head>
 <body>
 	<header class="account-header">
@@ -60,7 +61,7 @@
 	</header>
 	<main class="account-main">
 		<h1>Your account</h1>
-		<p class="lead">Sign in to view your plugin purchases, license status, and activations.</p>
+		<p class="lead">Sign in to manage your TMMW subscription and plugin access.</p>
 
 		<section class="panel" id="login-panel" aria-labelledby="login-title">
 			<h2 id="login-title">Sign in with email</h2>
@@ -74,24 +75,16 @@
 
 		<section class="hidden" id="dashboard" aria-labelledby="dashboard-title">
 			<div class="panel">
-				<h2 id="dashboard-title">Purchases and licenses</h2>
+				<h2 id="dashboard-title">Your account</h2>
 				<p id="signed-in-email"></p>
 				<div class="account-actions"><button id="sign-out-button" type="button">Sign out</button></div>
 				<p class="status" id="dashboard-status" role="status" aria-live="polite"></p>
 			</div>
-			<section class="panel hidden" id="checkout-panel" aria-labelledby="checkout-title">
-				<h2 id="checkout-title">Complete your purchase</h2>
-				<p id="checkout-product"></p>
-				<div class="account-actions"><button id="checkout-button" type="button">Continue to secure checkout</button></div>
+			<section class="panel" aria-labelledby="subscription-title">
+				<h2 id="subscription-title">Subscription</h2>
+				<div class="record-list" id="subscription-details"></div>
+				<div class="plan-options hidden" id="plan-options"></div>
 				<p class="status" id="checkout-status" role="status" aria-live="polite"></p>
-			</section>
-			<section class="panel" aria-labelledby="licenses-title">
-				<h2 id="licenses-title">Licenses and activations</h2>
-				<div class="record-list" id="licenses-list"></div>
-			</section>
-			<section class="panel" aria-labelledby="orders-title">
-				<h2 id="orders-title">Orders</h2>
-				<div class="record-list" id="orders-list"></div>
 			</section>
 		</section>
 	</main>
