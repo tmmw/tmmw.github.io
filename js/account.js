@@ -14,6 +14,7 @@
 	const pageParams = new URLSearchParams(window.location.search);
 	const requestedSku = /^[a-z0-9][a-z0-9_-]{1,63}$/i.test(pageParams.get("buy") ?? "") ? pageParams.get("buy") : "";
 	let supabaseClient;
+	let latestLoadId = 0;
 
 	const checkoutErrors = {
 		product_unavailable: "This product isn’t available for direct purchase yet.",
@@ -87,8 +88,7 @@
 		document.getElementById("signed-in-email").textContent = user.email ?? "Signed in";
 		showCheckout();
 		setStatus(dashboardStatus, "Loading your account…");
-		licensesList.replaceChildren();
-		ordersList.replaceChildren();
+		const loadId = ++latestLoadId;
 
 		const [licenseResult, orderResult] = await Promise.all([
 			supabaseClient.from("licenses")
@@ -98,6 +98,10 @@
 				.select("id,status,currency,subtotal_amount,tax_amount,total_amount,created_at,paid_at,order_items(quantity,unit_amount,currency,products(name,sku))")
 				.order("created_at", { ascending: false })
 		]);
+		// Sign-in fires several auth events; only the newest load may render.
+		if (loadId !== latestLoadId) return;
+		licensesList.replaceChildren();
+		ordersList.replaceChildren();
 
 		if (licenseResult.error || orderResult.error) {
 			console.error("Could not load account records", licenseResult.error ?? orderResult.error);
