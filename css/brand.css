@@ -1,0 +1,317 @@
+/*
+ * Brand layer: matches the social media look (brand card, banners, vertical videos).
+ * Near-black gradient + soft blue glow, condensed black headlines with a yellow
+ * marker highlight, muted grey copy, blue pill buttons, rounded tiles, stripe texture.
+ * Loaded LAST on every page so it overrides each page's inline <style> tokens.
+ */
+
+:root {
+	--brand-bg-top: #10111a;
+	--brand-bg: #08080a;
+	--brand-panel: #13151c;
+	--brand-panel-2: #181a22;
+	--brand-line: rgba(255, 255, 255, 0.09);
+	--brand-line-strong: rgba(255, 255, 255, 0.18);
+	--brand-fg: #f6f6f8;
+	--brand-text: #c4c6ce;
+	--brand-muted: #a5a8b2;
+	--brand-blue: #4d8dff;
+	--brand-blue-hover: #74a6ff;
+	--brand-blue-soft: #9fc0ff;
+	--brand-yellow: #ffd23f;
+	--brand-green: #3ddc84;
+	--brand-dark: #0a0a0c;
+	--brand-radius: 16px;
+	--brand-shadow: 0 24px 48px -24px rgba(0, 0, 0, 0.85);
+	--font-display: "Archivo", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	--font-body: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+
+	/* Re-point every page's own tokens at the brand palette */
+	--page-bg: var(--brand-bg);
+	--hero-bg: transparent;
+	--band-bg: rgba(255, 255, 255, 0.018);
+	--band: rgba(255, 255, 255, 0.018);
+	--bg: var(--brand-bg);
+	--panel-bg: var(--brand-panel);
+	--panel: var(--brand-panel);
+	--panel-deep: #0d0e13;
+	--card-bg: var(--brand-panel);
+	--border: var(--brand-line);
+	--border-strong: var(--brand-line-strong);
+	--text: var(--brand-text);
+	--heading: var(--brand-fg);
+	--muted: var(--brand-muted);
+	--blue: var(--brand-blue);
+	--blue-hover: var(--brand-blue-hover);
+	--blue-soft: var(--brand-blue-soft);
+	--account-bg: var(--brand-bg);
+	--account-panel: var(--brand-panel);
+	--account-border: var(--brand-line);
+	--account-text: var(--brand-text);
+	--account-heading: var(--brand-fg);
+	--account-blue: var(--brand-blue);
+	color-scheme: dark;
+}
+
+/* ---------- Base ---------- */
+
+html {
+	background-color: var(--brand-bg);
+}
+
+body {
+	background-color: var(--brand-bg);
+	background-image:
+		radial-gradient(900px 620px at 22% 0%, rgba(77, 141, 255, 0.16), transparent 70%),
+		radial-gradient(700px 520px at 100% 85%, rgba(120, 90, 255, 0.07), transparent 70%),
+		linear-gradient(180deg, var(--brand-bg-top) 0, var(--brand-bg) 900px);
+	background-repeat: no-repeat;
+	color: var(--brand-text);
+	font-family: var(--font-body);
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3 {
+	color: var(--brand-fg);
+}
+
+::selection {
+	background: var(--brand-yellow);
+	color: var(--brand-dark);
+}
+
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+input:focus-visible,
+[tabindex]:focus-visible {
+	outline: 3px solid var(--brand-blue-soft);
+	outline-offset: 3px;
+}
+
+/* Condensed black display type, as in the brand card headline */
+.display,
+.slogan,
+.section-title,
+.final-cta h2,
+.hero h1,
+.account-main h1,
+.wrap > h1 {
+	font-family: var(--font-display);
+	font-stretch: 62%;
+	font-weight: 900;
+	letter-spacing: -0.005em;
+	line-height: 1.04;
+	color: var(--brand-fg);
+}
+
+.section-title {
+	font-size: clamp(32px, 4.4vw, 48px);
+	letter-spacing: 0;
+	margin: 0 0 18px;
+}
+
+/* Yellow marker, same as the highlighted words in the videos */
+.hl {
+	background: var(--brand-yellow);
+	color: var(--brand-dark);
+	padding: 0.02em 0.14em 0.04em;
+	margin: 0 -0.04em;
+	border-radius: 0.12em;
+	-webkit-box-decoration-break: clone;
+	box-decoration-break: clone;
+}
+
+.eyebrow,
+.productPlatform,
+.product-type {
+	color: var(--brand-muted);
+	font-weight: 700;
+	letter-spacing: 0.14em;
+}
+
+/* ---------- Buttons: blue pills ---------- */
+
+.contact-button,
+.productBuyButton,
+.button,
+.button-link,
+.workflow-form button,
+.account-main button:not(.button-quiet) {
+	border-radius: 999px;
+	background-color: var(--brand-blue);
+	color: #fff;
+	font-family: var(--font-body);
+	font-weight: 700;
+	letter-spacing: 0.01em;
+	box-shadow: 0 10px 28px -10px rgba(77, 141, 255, 0.7);
+	transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contact-button:hover,
+.productBuyButton:hover,
+.button:hover,
+.button-link:hover,
+.workflow-form button:hover,
+.account-main button:not(.button-quiet):hover:not(:disabled) {
+	background-color: var(--brand-blue-hover);
+	color: #fff;
+	transform: translateY(-1px);
+	box-shadow: 0 14px 32px -10px rgba(77, 141, 255, 0.85);
+}
+
+.secondary-button,
+.button-ghost,
+.home-button,
+.back-button,
+.button-quiet {
+	border-radius: 999px;
+	background: rgba(255, 255, 255, 0.03);
+	border: 1px solid var(--brand-line-strong);
+	color: var(--brand-fg);
+	font-weight: 700;
+	box-shadow: none;
+}
+
+.secondary-button:hover,
+.button-ghost:hover,
+.home-button:hover,
+.back-button:hover,
+.button-quiet:hover:not(:disabled) {
+	background: rgba(255, 255, 255, 0.08);
+	border-color: rgba(255, 255, 255, 0.4);
+	color: var(--brand-fg);
+}
+
+/* ---------- Cards / tiles ---------- */
+
+.service-card,
+.process-step,
+.workflow-examples li,
+.before-after-card,
+.system-card,
+.productCont,
+.app-logo-card,
+.workflow-form,
+.success-message,
+.panel,
+.product,
+.host-card,
+.stat,
+.facts li,
+.record {
+	background: linear-gradient(180deg, var(--brand-panel-2), var(--brand-panel));
+	border: 1px solid var(--brand-line);
+	border-radius: var(--brand-radius);
+	box-shadow: var(--brand-shadow);
+}
+
+.service-card h3,
+.process-step h3,
+.before-after-card h3,
+.workflow-examples h3,
+.system-card h3,
+.productTitle,
+.product h3,
+.host-card h3,
+.panel h2 {
+	color: var(--brand-fg);
+	font-weight: 700;
+	letter-spacing: -0.005em;
+}
+
+.process-step:hover,
+.process-step:focus-visible,
+.workflow-examples li:hover,
+.workflow-examples li:focus-within {
+	background: linear-gradient(180deg, #1b2233, var(--brand-panel));
+	border-color: rgba(77, 141, 255, 0.35);
+}
+
+/* ---------- Footer / site header on sub-pages ---------- */
+
+.site-header,
+.account-header {
+	border-bottom-color: var(--brand-line);
+}
+
+.brand,
+.account-brand {
+	color: var(--brand-fg);
+	font-weight: 700;
+	letter-spacing: 0.06em;
+	text-transform: uppercase;
+}
+
+footer {
+	border-top-color: var(--brand-line);
+}
+
+/* ---------- Form fields ---------- */
+
+input,
+textarea,
+select {
+	background-color: #0d0e13;
+	border-color: var(--brand-line-strong);
+	border-radius: 10px;
+	color: var(--brand-fg);
+}
+
+input:focus,
+textarea:focus {
+	border-color: var(--brand-blue);
+}
+
+/* ---------- Product pages ---------- */
+
+.price-card,
+.summary {
+	border-color: rgba(77, 141, 255, 0.55);
+	border-radius: 20px;
+	background:
+		radial-gradient(420px 260px at 20% 0%, rgba(77, 141, 255, 0.22), transparent 70%),
+		linear-gradient(180deg, var(--brand-panel-2), var(--brand-panel));
+	box-shadow: var(--brand-shadow);
+}
+
+.hero h1 {
+	font-size: clamp(44px, 7vw, 84px);
+}
+
+.price,
+.stat strong {
+	font-family: var(--font-display);
+	font-stretch: 62%;
+	font-weight: 900;
+}
+
+.billing-toggle button[aria-pressed="true"] {
+	background: var(--brand-blue);
+}
+
+.feature-list li::before {
+	background: var(--brand-yellow);
+}
+
+.hero-mosaic img,
+.product-media img,
+.productSplashImage {
+	border-radius: 12px;
+}
+
+.app-icon {
+	border-radius: 28px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.contact-button,
+	.productBuyButton,
+	.button,
+	.button-link {
+		transition: none;
+	}
+}

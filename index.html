@@ -15,7 +15,7 @@
 	<link rel="stylesheet" href="css/style.css">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&amp;display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&amp;display=swap" rel="stylesheet">
 		<style>
 			:root {
 				--page-bg: #282828;
@@ -28,7 +28,7 @@
 			}
 
 			.contact-button {
-				background-color: #2d7ff9;
+				background-color: #4d8dff;
 				color: #ffffff;
 				padding: 10px 20px;
 				border-radius: 8px;
@@ -66,92 +66,84 @@
 			header {
 				position: relative;
 				width: 100%;
-				min-height: 520px;
-				padding: 48px 24px 64px;
+				min-height: 620px;
+				padding: 56px 24px 88px;
 				display: grid;
-				place-items: center;
-				background-color: #141414;
+				align-items: center;
+				background: transparent;
 				overflow: hidden;
+				border-bottom: 1px solid var(--brand-line);
+			}
+
+			/* Brand stripe texture, fading in from the right like the profile banners */
+			.hero-stripes {
+				position: absolute;
+				inset: 0;
+				z-index: 0;
+				pointer-events: none;
+				background: url("images/brand-stripes.png") right center / cover no-repeat;
+				opacity: 0.05;
+				-webkit-mask-image: linear-gradient(90deg, transparent 25%, #000 85%);
+				mask-image: linear-gradient(90deg, transparent 25%, #000 85%);
 			}
 
 			.hero-inner {
 				position: relative;
 				z-index: 1;
-				width: min(1100px, 100%);
+				width: min(1120px, 100%);
+				margin: 0 auto;
 				display: grid;
-				justify-items: center;
-				gap: 28px;
-				text-align: center;
+				justify-items: start;
+				gap: 64px;
+				text-align: left;
 			}
 
-			.workflow-map {
-				position: absolute;
-				inset: 0;
-				z-index: 0;
-				opacity: 0.55;
-				pointer-events: none;
+			.brand-row {
+				display: flex;
+				align-items: center;
+				gap: 20px;
 			}
 
-			.workflow-map::before,
-			.workflow-map::after {
-				content: "";
-				position: absolute;
-				inset: 12% 8%;
-				background:
-					linear-gradient(90deg, transparent 0 12%, rgba(45, 127, 249, 0.34) 12% 88%, transparent 88%) 0 35% / 100% 1px no-repeat,
-					linear-gradient(90deg, transparent 0 22%, rgba(45, 127, 249, 0.24) 22% 78%, transparent 78%) 0 62% / 100% 1px no-repeat,
-					linear-gradient(180deg, transparent 0 28%, rgba(45, 127, 249, 0.24) 28% 70%, transparent 70%) 23% 0 / 1px 100% no-repeat,
-					linear-gradient(180deg, transparent 0 25%, rgba(45, 127, 249, 0.2) 25% 75%, transparent 75%) 50% 0 / 1px 100% no-repeat,
-					linear-gradient(180deg, transparent 0 30%, rgba(45, 127, 249, 0.24) 30% 68%, transparent 68%) 77% 0 / 1px 100% no-repeat;
+			.brand-mark {
+				display: grid;
+				place-items: center;
+				gap: 2px;
+				width: 72px;
+				height: 72px;
+				padding: 10px 8px 8px;
+				border: 1.5px solid rgba(255, 255, 255, 0.85);
+				border-radius: 12px;
+				background: rgba(77, 141, 255, 0.08);
+				color: #fff;
+				font-size: 12px;
+				letter-spacing: 0.04em;
+				line-height: 1;
 			}
 
-			.workflow-map::after {
-				background:
-					radial-gradient(circle, #2d7ff9 0 3px, transparent 4px) 12% 35% / 100% 100% no-repeat,
-					radial-gradient(circle, #2d7ff9 0 3px, transparent 4px) 23% 62% / 100% 100% no-repeat,
-					radial-gradient(circle, #2d7ff9 0 3px, transparent 4px) 50% 35% / 100% 100% no-repeat,
-					radial-gradient(circle, #2d7ff9 0 3px, transparent 4px) 77% 62% / 100% 100% no-repeat,
-					radial-gradient(circle, #2d7ff9 0 3px, transparent 4px) 88% 35% / 100% 100% no-repeat;
-				filter: drop-shadow(0 0 12px rgba(45, 127, 249, 0.55));
+			.brand-mark svg {
+				width: 34px;
+				height: auto;
+				margin-top: -6px;
 			}
 
-			.workflow-pulse {
-				position: absolute;
-				top: 35%;
-				left: 10%;
-				width: 8px;
-				height: 8px;
-				background-color: #2d7ff9;
-				border-radius: 50%;
-				box-shadow: 0 0 22px rgba(45, 127, 249, 0.9);
-				animation: workflowPulse 6s ease-in-out infinite;
+			.brand-name,
+			.brand-tag {
+				margin: 0;
 			}
 
-			.workflow-pulse:nth-child(2) {
-				top: 62%;
-				animation-delay: 1.8s;
+			.brand-name {
+				color: var(--brand-fg);
+				font-size: 24px;
+				font-weight: 700;
+				letter-spacing: 0.01em;
+				text-transform: uppercase;
 			}
 
-			.workflow-pulse:nth-child(3) {
-				top: 35%;
-				animation-delay: 3.3s;
-			}
-
-			@keyframes workflowPulse {
-				0% {
-					transform: translateX(0);
-					opacity: 0;
-				}
-
-				10%,
-				80% {
-					opacity: 1;
-				}
-
-				100% {
-					transform: translateX(78vw);
-					opacity: 0;
-				}
+			.brand-tag {
+				margin-top: 4px;
+				color: var(--brand-muted);
+				font-size: 18px;
+				font-weight: 500;
 			}
 
 			.header-left {
@@ -170,30 +162,38 @@
 
 			.hero-content {
 				display: grid;
-				justify-items: center;
-				gap: 18px;
-				max-width: 860px;
+				justify-items: start;
+				gap: 22px;
+				max-width: 900px;
 			}
 
 			.slogan {
 				margin: 0;
-				text-align: center;
-				font-size: 42px;
-				font-weight: 100;
-				letter-spacing: 2px;
-				color: var(--heading);
+				text-align: left;
+				font-size: clamp(52px, 8.4vw, 104px);
+				line-height: 1.06;
+				padding: 0;
 			}
 
 			.hero-subtitle {
 				margin: 0;
-				max-width: 700px;
-				color: var(--text);
-				font-size: 18px;
-				line-height: 1.7;
+				max-width: 620px;
+				color: var(--brand-muted);
+				font-size: 20px;
+				font-weight: 500;
+				line-height: 1.55;
 			}
 
-			.hero-content .contact-button {
-				margin-top: 12px;
+			.hero-actions {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 12px;
+				margin-top: 10px;
+			}
+
+			.contact-button,
+			.secondary-button {
+				padding: 13px 24px;
 			}
 
 			footer {
@@ -291,7 +291,7 @@
 			}
 
 			.process-grid::after {
-				background-color: #2d7ff9;
+				background-color: #4d8dff;
 				transform: scaleX(1);
 				transform-origin: left;
 				transition: transform 700ms ease-out;
@@ -414,9 +414,9 @@
 			.process-section.is-visible .process-number,
 			.process-step:hover .process-number,
 			.process-step:focus-visible .process-number {
-				background-color: #2d7ff9;
-				border-color: #2d7ff9;
-				box-shadow: 0 0 20px rgba(45, 127, 249, 0.35);
+				background-color: #4d8dff;
+				border-color: #4d8dff;
+				box-shadow: 0 0 20px rgba(77, 141, 255, 0.35);
 			}
 
 			.products-section #productsCont {
@@ -458,7 +458,7 @@
 				right: 20px;
 				bottom: 16px;
 				height: 2px;
-				background-color: #2d7ff9;
+				background-color: #4d8dff;
 				transform: scaleX(0);
 				transform-origin: left;
 				transition: transform 220ms ease-out;
@@ -505,7 +505,7 @@
 			.before-after-arrow {
 				display: grid;
 				place-items: center;
-				color: #2d7ff9;
+				color: var(--brand-yellow);
 				font-size: 28px;
 				line-height: 1;
 			}
@@ -551,8 +551,8 @@
 				height: 10px;
 				margin: -5px 0 0 -5px;
 				border-radius: 50%;
-				background-color: #2d7ff9;
-				box-shadow: 0 0 18px rgba(45, 127, 249, 0.95);
+				background-color: #4d8dff;
+				box-shadow: 0 0 18px rgba(77, 141, 255, 0.95);
 			}
 
 			.capability-pulse.one {
@@ -814,10 +814,8 @@
 
 			.final-cta h2 {
 				margin: 0;
-				color: var(--heading);
-				font-size: 28px;
-				font-weight: 400;
-				letter-spacing: 1px;
+				max-width: 820px;
+				font-size: clamp(38px, 5.6vw, 64px);
 			}
 
 			.is-hidden {
@@ -840,11 +838,33 @@
 				}
 
 				.slogan {
-					font-size: 31px;
+					font-size: clamp(44px, 13vw, 64px);
 				}
 
 				.hero-subtitle {
-					font-size: 16px;
+					font-size: 17px;
+				}
+
+				.hero-inner {
+					gap: 44px;
+				}
+
+				.brand-mark {
+					width: 56px;
+					height: 56px;
+					font-size: 10px;
+				}
+
+				.brand-mark svg {
+					width: 26px;
+				}
+
+				.brand-name {
+					font-size: 17px;
+				}
+
+				.brand-tag {
+					font-size: 14px;
 				}
 
 				.main-section {
@@ -925,23 +945,35 @@
 					transform: scaleX(1);
 				}
 
-					.workflow-map,
-					.workflow-pulse,
 					.capability-pulse {
 						animation: none;
 					}
 				}
 		</style>
+		<link rel="stylesheet" href="css/brand.css">
 </head>
 
 <body>
 	<header>
-		<div class="workflow-map" aria-hidden="true">
-			<span class="workflow-pulse"></span>
-			<span class="workflow-pulse"></span>
-			<span class="workflow-pulse"></span>
-		</div>
+		<div class="hero-stripes" aria-hidden="true"></div>
 		<div class="hero-inner">
+			<div class="brand-row">
+				<span class="brand-mark" aria-hidden="true">
+					<svg viewBox="250 44 500 500" xmlns="http://www.w3.org/2000/svg">
+						<g fill="#fff">
+							<path d="M415.19 462.31 301.76 191h60.53l113.1 271.32z" />
+							<path d="M588.64 462.31 475.22 191h60.52l113.11 271.31z" />
+							<path d="M467.9 399.05 354.48 127.73H415l113.11 271.32z" />
+							<path d="M641.36 399.05 527.93 127.73h60.53l113.1 271.32z" />
+						</g>
+					</svg>
+					<span>TMMW</span>
+				</span>
+				<div>
+					<p class="brand-name">The Machine Must Work</p>
+					<p class="brand-tag">Custom tools and plugins for creative teams</p>
+				</div>
+			</div>
 			<div class="header-left">
 				<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1000 1000" width="100">
 				<defs>
@@ -988,10 +1020,12 @@
 				</svg>
 			</div>
 			<div class="hero-content">
-				<h1 class="slogan">Workflow automation for creative teams</h1>
+				<h1 class="slogan">Workflow automation for <span class="hl">creative teams.</span></h1>
 				<p class="hero-subtitle">Custom automations tailored for your company.</p>
-				<a href="contact.html" class="contact-button">Schedule a free workflow review</a>
-				<a href="#plugins" class="secondary-button">Browse our plugins</a>
+				<div class="hero-actions">
+					<a href="contact.html" class="contact-button">Schedule a free workflow review</a>
+					<a href="#plugins" class="secondary-button">Browse our plugins</a>
+				</div>
 			</div>
 		</div>
 	</header>
@@ -1188,7 +1222,7 @@
 
 	<section class="main-section">
 		<div class="section-inner final-cta">
-			<h2>Have a workflow your team keeps repeating?</h2>
+			<h2>Have a workflow your team keeps repeating? <span class="hl">Let the machine work.</span></h2>
 			<a href="contact.html" class="contact-button">Schedule a free workflow review</a>
 			<p class="cta-note">Useful for production teams, agencies, broadcasters, studios, and in-house creative departments.</p>
 		</div>
