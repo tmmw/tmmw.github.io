@@ -382,6 +382,7 @@ Are there files, templates, APIs, or internal systems involved?" required></text
 		document.addEventListener('DOMContentLoaded', function () {
 			const form = document.getElementById('contactForm');
 			const loadingOverlay = document.querySelector('.loading-overlay');
+			const CONTACT_ENDPOINT = 'https://nypxqcokiepunewifiar.supabase.co/functions/v1/submit-contact';
 
 			// Set timestamp when page loads
 			document.getElementById('formTimestamp').value = Date.now();
@@ -523,25 +524,38 @@ Are there files, templates, APIs, or internal systems involved?" required></text
 				localStorage.setItem('lastSubmission', messageHash);
 				localStorage.setItem('lastSubmissionTime', Date.now().toString());
 
-				// Submit the form
+				// Submit to both the Google Apps Script (current) and Supabase (new lead pipeline
+				// picked up by n8n). Succeeds if either one accepts it. Remove the Apps Script call
+				// once the Supabase path has been verified in production.
 				const formData = new FormData(form);
-				fetch(form.action, {
+				const toAppsScript = fetch(form.action, {
 					method: 'POST',
 					body: formData
-				})
-					.then(response => {
-						if (response.ok) {
-							window.location.href = 'contactSuccess.html';
-						} else {
-							loadingOverlay.style.display = 'none';
-							showError('There was an error sending your message. Please try again.');
-						}
+				});
+				const toSupabase = fetch(CONTACT_ENDPOINT, {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify({
+						name: name,
+						email: email,
+						message: message,
+						website: honeypot,
+						formTimestamp: document.getElementById('formTimestamp').value,
+						userAgent: document.getElementById('userAgent').value,
+						timezone: document.getElementById('timezone').value
 					})
-					.catch(error => {
+				});
+
+				Promise.allSettled([toAppsScript, toSupabase]).then(results => {
+					const accepted = results.some(result => result.status === 'fulfilled' && result.value.ok);
+					if (accepted) {
+						window.location.href = 'contactSuccess.html';
+					} else {
 						loadingOverlay.style.display = 'none';
 						showError('There was an error sending your message. Please try again.');
-						console.error('Error:', error);
-					});
+						console.error('Contact form failed:', results);
+					}
+				});
 			});
 
 			// Simple hash function for duplicate detection
